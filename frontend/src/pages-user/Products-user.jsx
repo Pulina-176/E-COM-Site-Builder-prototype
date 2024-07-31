@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar_User from '../components-user/Navbar-user';
 import axios from 'axios';
 import AddItemForm from '../components/AddItemForm';
 import { PropContext } from '../components/PropContext';
@@ -107,7 +107,7 @@ const Products_user = () => {
 
   return (
     <div>
-      <Navbar pages={list} />
+      <Navbar_User pages={list} />
       <h1 className='font-inter font-extrabold text-4xl ml-[60px] my-[30px]'>Products</h1>
       {productList.map((item, index) => (
         <div key={index}>

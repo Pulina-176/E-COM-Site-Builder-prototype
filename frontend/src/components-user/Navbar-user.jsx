@@ -5,7 +5,7 @@ import axios from 'axios';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const frontend = import.meta.env.VITE_FRONTEND_URL;
 
-const Navbar = ({pages}) => {//need to pass the hyperlink (address to page) as well in props
+const Navbar_User = ({pages}) => {//need to pass the hyperlink (address to page) as well in props
                                         //isLanding is a boolean prop to check if landing or not.
 
    const [bg, setBg] = useState('#111111'); //state to store the background color or image URL of the navbar
@@ -75,10 +75,10 @@ const Navbar = ({pages}) => {//need to pass the hyperlink (address to page) as w
         >
                 
               
-                <p><a href={`${frontend}/admin/`}>Home</a></p>
-                <p><a href={`${frontend}/admin/products`}>Products</a></p>
-                <p><a href={`${frontend}/admin/services`}>Services</a></p>
-                <p><a href={"#"}>Log Out</a></p>
+                <p><a href={`${frontend}/user/`}>Home</a></p>
+                <p><a href={`${frontend}/user/products`}>Products</a></p>
+                <p><a href={`${frontend}/user/services`}>Services</a></p>
+                <p><a href={"#"}>About Us</a></p>
               
                 
             </div>
@@ -88,8 +88,8 @@ const Navbar = ({pages}) => {//need to pass the hyperlink (address to page) as w
   )
 }
 
-Navbar.propTypes = {
+Navbar_User.propTypes = {
   props: PropTypes.arrayOf(PropTypes.string), //the hyperlinks for the pages in the navigation bar 
 }
 
-export default Navbar
+export default Navbar_User
