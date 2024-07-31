@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import Navbar from '../components/Navbar';
+import Navbar_User from '../components-user/Navbar-user';
 import ServiceCard from '../components/Service-Card';
 import axios from 'axios';
 import Spinner from '../components/Spinner';
@@ -104,7 +104,7 @@ const Services_user = () => { //Services page in user's POV
     
   return (
     <div>
-      <Navbar pages={list} />
+      <Navbar_User pages={list} />
       <h1 className='font-inter font-extrabold text-4xl ml-[60px] my-[30px]'>Services</h1>
       
       {serviceList.map((item, index) => (
