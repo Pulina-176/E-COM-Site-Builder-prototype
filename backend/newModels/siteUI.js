@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const siteview = mongoose.Schema(
     {
         id: String,
+        colortheme: String,
         Landing: {
             imageURL: String,
             color: String,
@@ -14,7 +15,7 @@ const siteview = mongoose.Schema(
             fontStyle: String,
             fontSize: String,
             fontColor: String,
-        }
+        },
     }
 );
 

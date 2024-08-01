@@ -17,11 +17,11 @@ const Landing_Page_User = () => {
         const data = response.data;
         console.log(data);
 
-        if (data.Other.color !== null) {
-          setBg(data.Other.color);
+        if (data.Landing.color !== null) {
+          setBg(data.Landing.color);
           setIsImage(false);
-        } else if (data.Other.imageURL) {
-          setBg(data.Other.imageURL);
+        } else if (data.Landing.imageURL) {
+          setBg(data.Landing.imageURL);
           setIsImage(true);
         } else {
           setBg('#110011');
@@ -69,7 +69,7 @@ const Landing_Page_User = () => {
   }, []);
 
   return (
-    <div className="hero-overlay bg-opacity-40 relative w-full h-[500px] flex justify-center items-center">
+    <div className="relative w-full h-[500px] flex justify-center items-center">
         <div
           className='absolute inset-0'
           style={isImage ? 

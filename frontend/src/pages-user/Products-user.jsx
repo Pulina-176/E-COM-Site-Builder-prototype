@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import Navbar_User from '../components-user/Navbar-user';
 import axios from 'axios';
 import AddItemForm from '../components/AddItemForm';
@@ -6,11 +6,14 @@ import { PropContext } from '../components/PropContext';
 import ProductTile_user from '../components-user/Product-Tile-user';               // Product card with purchase button
 import ProductTile_user_no_buy from '../components-user/Product-Tile-user-no-buy'; // Product card with no purchase button
 import Spinner from '../components/Spinner';
+import { ThemeContext } from '../context/ThemeContext';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 const Products_user = () => {
+
+  const { theme } = useContext(ThemeContext); // Use context to access theme
 
   const list = ["Home", "Products", "Services", "Contact Us"];
   const [loading, setLoading] = useState(true); // State to handle the loading status
@@ -106,9 +109,13 @@ const Products_user = () => {
   }
 
   return (
-    <div>
+    <div className='pb-[50px]' style={{backgroundColor: theme.body,  color: theme.primaryText }}>
       <Navbar_User pages={list} />
-      <h1 className='font-inter font-extrabold text-4xl ml-[60px] my-[30px]'>Products</h1>
+      <h1 className='font-inter font-extrabold text-4xl ml-[60px] my-[30px]'
+          style={{ color: theme.mainHead }}
+      >
+        Products </h1>
+      
       {productList.map((item, index) => (
         <div key={index}>
           <h1 className='font-inter font-extrabold text-3xl ml-[60px] my-[30px]'>{item}</h1>
@@ -116,7 +123,7 @@ const Products_user = () => {
           <div className='flex flex-row'>
             <div className='ml-[60px] flex flex-row'>
               {productData[pIDList[index]]?.map((value, i) => (
-                <div key={i} className='mx-[20px]'>
+                <div key={i} className='mx-[20px] mb-[30px]'>
                   {features[index][1]==0? //check for buy option in feature string
                   <ProductTile_user_no_buy tileprops={tileProps[index]} features={features[index]} productData={value} index={index}/>: 
                   <ProductTile_user tileprops={tileProps[index]} features={features[index]} productData={value} index={index}/>}
@@ -127,6 +134,7 @@ const Products_user = () => {
           </PropContext.Provider>
         </div>
       ))}
+
     </div>
   );
 };
