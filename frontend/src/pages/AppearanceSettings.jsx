@@ -1,39 +1,48 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import DropDown3 from '../components/DropDown3'
-import {Link} from 'react-router-dom'
 import PopupBox_Navbar_color_image from '../components/visualservice/Navbar-color-image'
 import Landing_customize from '../components/visualservice/Landing-customize'
+import { themes } from '../config/colorthemes'
+import { useState } from 'react'
+import axios from 'axios'
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 
 const AppearanceSettings = () => {
-    const list = ["Home", "Products", "Services", "Contact Us"]
+    const list = ["Home", "Products", "Services", "Contact Us"] 
+
+    const themeList = Object.keys(themes);
+    console.log(themeList)
+
+    const [newTheme, setNewTheme] = useState("default");
+
+    const handleChangeTheme = (themeName) => {
+        setNewTheme(themeName);
+    };
+
+    const saveTheme = async() => {
+
+        const formData = {
+            colortheme: newTheme
+        }
+
+        console.log(formData.colortheme)
+
+        const response = await axios.patch(`${backendUrl}/display/`, formData)
+                                    .then((res)=>{alert("Theme saved successfully"); console.log(res)})
+                                    .catch((err)=>{console.log("Error saving theme",err); alert("Error saving theme")})
+    }
 
     return (
         <div class="container">
             <Navbar pages={list}></Navbar>
             <h1 className='font-inter font-extrabold text-4xl ml-[60px] my-[30px]'>Admin Settings</h1>
             <div className='flex flex-col'>
-                <div className='w-[60%] h-[150px] bg-[#F0F3FF] ml-[60px] rounded-[10px] flex flex-row justify-center items-center'>
-                    <label className='mx-[20px] flex flex-col items-center'>
-                        <div className='w-[100px] h-[15px] bg-orange-300' onClick={() => console.log("clicked")}></div>
-                        <p className='mt-[10px] justify-center'>Main Body</p>
-                    </label>
-                    <label className='mx-[20px] flex flex-col items-center'>
-                        <div className='w-[100px] h-[15px] bg-violet-300' onClick={() => console.log("clicked")}></div>
-                        <p className='mt-[10px] justify-center'>Main Headings</p>
-                    </label>
-                    <label className='mx-[20px] flex flex-col items-center'>
-                        <div className='w-[100px] h-[15px] bg-indigo-700' onClick={() => console.log("clicked")}></div>
-                        <p className='mt-[10px] justify-center'>Sub Headings</p>
-                    </label>
-                    <label className='mx-[20px] flex flex-col items-center'>
-                        <div className='w-[100px] h-[15px] bg-pink-500' onClick={() => console.log("clicked")}></div>
-                        <p className='mt-[10px] justify-center'>Button theme</p>
-                    </label>
-                    <label className='mx-[20px] flex flex-col items-center'>
-                        <div className='w-[100px] h-[15px] bg-green-700' onClick={() => console.log("clicked")}></div>
-                        <p className='mt-[10px] justify-center'>Font Color</p>
-                    </label>
+                <div className='w-[auto] h-[150px] bg-[#F0F3FF] ml-[60px] rounded-[10px] flex flex-row justify-center items-center'>
+                    <DropDown3 values={themeList} setComType={handleChangeTheme}></DropDown3>
+                    <button className='btn btn-sm btn-accent text-white px-[20px] h-[20px] rounded-[5px] ml-[20px]' onClick={saveTheme}>Save</button>
                 </div>
 
                 <div className='w-[40%] my-[40px] h-[auto] bg-[#F0F3FF] ml-[60px] rounded-[10px] flex flex-col'>
@@ -72,29 +81,29 @@ export default AppearanceSettings
 
 
 
-const themes = {
-    modernMinimalist: {
-      backgroundColor: "#FFFFFF",
-      productTileColor: "#F8F8F8",
-      buttonColor: "#007BFF",
-      textColor: "#333333",
-    },
-    warmInviting: {
-      backgroundColor: "#FDFDFD",
-      productTileColor: "#FFF7E6",
-      buttonColor: "#FF5733",
-      textColor: "#4B4B4B",
-    },
-    boldDynamic: {
-      backgroundColor: "#F5F5F5",
-      productTileColor: "#FFFFFF",
-      buttonColor: "#FF4500",
-      textColor: "#000000",
-    },
-    elegantSophisticated: {
-      backgroundColor: "#FAFAFA",
-      productTileColor: "#F2F2F2",
-      buttonColor: "#5A5A5A",
-      textColor: "#212121",
-    },
-  };
+// const themes = {
+//     modernMinimalist: {
+//       backgroundColor: "#FFFFFF",
+//       productTileColor: "#F8F8F8",
+//       buttonColor: "#007BFF",
+//       textColor: "#333333",
+//     },
+//     warmInviting: {
+//       backgroundColor: "#FDFDFD",
+//       productTileColor: "#FFF7E6",
+//       buttonColor: "#FF5733",
+//       textColor: "#4B4B4B",
+//     },
+//     boldDynamic: {
+//       backgroundColor: "#F5F5F5",
+//       productTileColor: "#FFFFFF",
+//       buttonColor: "#FF4500",
+//       textColor: "#000000",
+//     },
+//     elegantSophisticated: {
+//       backgroundColor: "#FAFAFA",
+//       productTileColor: "#F2F2F2",
+//       buttonColor: "#5A5A5A",
+//       textColor: "#212121",
+//     },
+//   };

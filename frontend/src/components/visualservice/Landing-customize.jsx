@@ -81,10 +81,12 @@ const Landing_customize = () => { //boolean prop to check if landing or not.
         formData.Landing.businessTitle = description;
       
         try {
-          const response = await axios.patch(`${backendUrl}/display/`, formData);
+          const response = await axios.patch(`${backendUrl}/display/`, formData)
+                                      .then(alert("Settings saved successfully"));
           console.log('Font settings saved:', response.data);
         } catch (error) {
           console.error('Error saving font settings:', error);
+          alert("Error saving settings")
         }
       };
   
