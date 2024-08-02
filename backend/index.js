@@ -45,7 +45,7 @@ mongoose
     .then(() => {
         console.log(`App is connected to Database`);
         app.listen(PORT, () => {
-            console.log(`App is listening to port: ${PORT}`);
+            console.log(`App listening to port: ${PORT}`);
         })
         
     })
