@@ -1,9 +1,12 @@
 import React, {useEffect , useState} from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const Landing_Page_User = () => {
+
+  let navigate = useNavigate();
 
   const [bg, setBg] = useState('#111111'); //state to store the background color or image URL of the navbar
   const [isImage, setIsImage] = useState(false); //state to determine if bg is color or image
@@ -84,7 +87,10 @@ const Landing_Page_User = () => {
           }
         >
       </div>
-      <div className="relative z-10 text-center" dangerouslySetInnerHTML={{ __html: businessTitle }} />
+      <div className='flex flex-col'>
+        <div className="relative z-10 text-center" dangerouslySetInnerHTML={{ __html: businessTitle }} />
+        <button className="relative z-11 self-center btn btn-wide bg-black text-white border-none mt-[20px]" onClick={()=>navigate('/user/products')}>Get Started</button>
+      </div>
 
     </div>
   )

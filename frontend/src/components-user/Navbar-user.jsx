@@ -75,7 +75,7 @@ const Navbar_User = ({pages}) => {//need to pass the hyperlink (address to page)
         >
                 
               
-                <p><a href={`${frontend}/user/`}>Home</a></p>
+                <p><a href={`${frontend}`}>Home</a></p>
                 <p><a href={`${frontend}/user/products`}>Products</a></p>
                 <p><a href={`${frontend}/user/services`}>Services</a></p>
                 <p><a href={"#"}>About Us</a></p>
