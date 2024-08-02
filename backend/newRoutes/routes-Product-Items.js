@@ -1,7 +1,7 @@
 import express from "express";
 import multer from 'multer';
 import path from 'path';
-import { prod_Obj } from "./newModels/Product-objects.js";
+import { prod_Obj } from "../newModels/Product-objects.js";
 
 const router = express();
 const storage = multer.diskStorage({
