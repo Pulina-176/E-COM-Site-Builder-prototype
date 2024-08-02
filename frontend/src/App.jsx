@@ -1,6 +1,8 @@
 import React from 'react';
 import {Routes, Route, Navigate} from 'react-router-dom';
 
+
+import AdminAuth from './pages/AdminAuth';
 import AdminSettings from './pages/AdminSettings';
 import AppearanceSettings from './pages/AppearanceSettings';
 import AddCommodity from './pages/AddCommodity';
@@ -8,6 +10,7 @@ import ViewCommodity from './pages/ViewCommodity';
 import UpdateCommodity from './pages/UpdateCommodity';
 import Products from './pages/Products';
 import Services from './pages/Services';
+
 
 import Products_user from './pages-user/Products-user';
 import Services_user from './pages-user/Services-user';
@@ -23,10 +26,11 @@ const App = () => {
         <Route path='/admin/upcom/:Type/:ID' element={<UpdateCommodity/>}/> 
         <Route path='/admin/products' element={<Products/>}/>
         <Route path='/admin/services' element={<Services/>}/>
+        <Route path='/admin-auth' element={<AdminAuth/>}/>
 
         <Route path='/user/products' element={<Products_user/>} />
         <Route path='/user/services' element={<Services_user/>} />
-        <Route path='/user' element={<Landing_Page_User/>} />
+        <Route path='/' element={<Landing_Page_User/>} />
     </Routes>
   )
 }
