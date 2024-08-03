@@ -8,6 +8,9 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const ProductTile = ({tileprops, productData, index}) => {
 
     const {allProps, pIDList} = useContext(PropContext)
+    console.log("allProps", allProps)
+    console.log("pIDList", pIDList)
+    console.log("index", index)
 
     const pk = productData["PK_n"]  //primary key
 
@@ -32,7 +35,7 @@ const ProductTile = ({tileprops, productData, index}) => {
         <div className='w-[300px] h-[auto] pt-[4px] pb-[0px] px-[8px] bg-gray-100'>{productData.props[value]}</div>
         ))}
         <div className="absolute top-0 right-0 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <UpdateItemForm propertyFields={allProps[index]} pID={pIDList[index]} pK={pk}/>
+            <UpdateItemForm propertyFields={allProps[index]} ID={pIDList[index]} pK={pk} comType="Product"/>
             <button className="bg-red-500 text-white px-4 py-2" onClick={Delete}>Delete</button>
         </div>
     </div>
