@@ -6,7 +6,7 @@ import { prod_Obj } from "../newModels/Product-Objects.js";
 const router = express();
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, '../frontend/public/images');
+        cb(null, '../public/images');
     },
     filename: (req, file, cb) => {
         cb(null, file.fieldname + '-' + Date.now() + '-' + file.originalname);
