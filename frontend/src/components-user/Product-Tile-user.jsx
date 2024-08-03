@@ -18,7 +18,7 @@ const ProductTile_user = ({tileprops, productData, features, index}) => {
     return (
     <div className='card relative group shadow-xl'>
         <div className='w-[300px] h-[300px] bg-gray-300'
-              style = {{ backgroundImage: `url('/public/images/${img_paths[0]}')`, 
+              style = {{ backgroundImage: `url('/images/${img_paths[0]}')`, 
                          backgroundSize: 'cover', 
                          backgroundPosition: 'center' }}
         ></div>

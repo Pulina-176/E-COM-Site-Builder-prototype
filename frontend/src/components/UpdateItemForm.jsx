@@ -31,6 +31,9 @@ const UpdateItemForm = ({propertyFields, ID, pK, comType}) => {
         // setMiniDescription(ID);
 
         const fetchData = async () => { //load existing data from database into the textboxes 
+            console.log(getANDpatchURL)
+            console.log(comType)
+
             if (isOpen) {
                 try {
                   const packet = await axios.get(getANDpatchURL);
