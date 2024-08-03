@@ -3,10 +3,12 @@ import multer from 'multer';
 import path from 'path';
 import { prod_Obj } from "../newModels/Product-Objects.js";
 
+const imgDir = process.env.imagePath || '../frontend/public/images';
+
 const router = express();
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, '../public/images');
+        cb(null, `${imgDir}`);
     },
     filename: (req, file, cb) => {
         cb(null, file.fieldname + '-' + Date.now() + '-' + file.originalname);
