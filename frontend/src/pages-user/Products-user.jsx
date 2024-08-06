@@ -72,8 +72,6 @@ const Products_user = () => {
       setPIDList(temp3);
       setFeatures(feats)
 
-      console.log(features)
-
       // Fetch product data based on product IDs
       if (temp3.length > 0) {
         const productPromises = temp3.map((pID) =>

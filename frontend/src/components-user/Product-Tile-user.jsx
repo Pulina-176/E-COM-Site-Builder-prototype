@@ -6,14 +6,17 @@
 
 import React, { useContext } from 'react'
 import { PropContext } from '../components/PropContext'
+import DescriptionP from './DescriptionP'
 
-const ProductTile_user = ({tileprops, productData, features, index}) => {
+const ProductTile_user = ({tileprops, productData, features, index}) => { //tileprops: properties to display in the tile, productData: data of the product, features: features of the product card type, index: index of the product in the product list
 
-    const {allProps, pIDList} = useContext(PropContext)
+    const {allProps, pIDList} = useContext(PropContext) //allProps: all properties of the product, pIDList: list of product IDs
 
     const pk = productData["PK_n"]  //primary key
 
-    const img_paths = productData["images"] //array of image paths
+    const img_paths = productData["images"] //array of image paths\
+
+    const viewDescriptionPage = features[3]
 
     return (
     <div className='card relative group shadow-xl'>
@@ -36,6 +39,8 @@ const ProductTile_user = ({tileprops, productData, features, index}) => {
         <div className="absolute top-0 right-0 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button className="bg-red-500 text-white px-4 py-2">Buy</button>
         </div>
+        {viewDescriptionPage === 1 && <DescriptionP product={productData} props={allProps[index]}/>}
+        
     </div>
     )
 }

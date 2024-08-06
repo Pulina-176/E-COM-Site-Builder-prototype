@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-const AddItemForm = ({propertyFields, pID}) => {
+const AddItemForm = ({propertyFields, pID, features}) => {
 
     async function getLastPK(ID) {
         const packet = await axios.get(`${backendUrl}/products/nxt-pk/${ID}`)
