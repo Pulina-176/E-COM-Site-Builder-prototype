@@ -20,6 +20,7 @@ const Products = () => {
   const [tileProps, setTileProps] = useState([]);     //tile properties
   const [allProps, setAllProps] = useState([]);       //all properties  
   const [productData, setProductData] = useState({}); //Data of individual product items   
+  const [features, setFeatures] = useState([]);       //Features of product categories (feature string)   
 
   // Fetch data function wrapped in useCallback to avoid unnecessary re-renders
   const fetchData = useCallback(async () => {
@@ -31,6 +32,7 @@ const Products = () => {
       const temp3 = [];           // Intermediate variable for pIDList
       const tilePropsTemp = [];   // Intermediate variable for tileProps
       const allPropsTemp = [];    // Intermediate variable for allProps
+      const feats = [];           // Intermediate variable for features
 
       // Clear state variables for best performance
       setTileProps([]);    
@@ -43,6 +45,7 @@ const Products = () => {
 
         temp2.push(block.GroupName);
         temp3.push(block.ProductID);
+        feats.push(block.Feature_string);
 
         for (const prop in block.Field_info){
           if (block.Field_info[prop].on_off === 1){
@@ -60,6 +63,7 @@ const Products = () => {
       setAllProps(allPropsTemp);
       setProductList(temp2);
       setPIDList(temp3);
+      setFeatures(feats)
 
       // Fetch product data based on product IDs
       if (temp3.length > 0) {
@@ -107,7 +111,7 @@ const Products = () => {
             <div className='ml-[60px] flex flex-row'>
               {productData[pIDList[index]]?.map((value, i) => (
                 <div key={i} className='mx-[20px]'>
-                  <ProductTile tileprops={tileProps[index]} productData={value} index={index}/>
+                  <ProductTile tileprops={tileProps[index]} productData={value} features={features[index]} index={index}/>
                 </div>
               ))}
             </div>

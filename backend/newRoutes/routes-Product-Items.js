@@ -68,16 +68,20 @@ router.patch('/:ID/:pk', upload, async(req,res) => {          //Update product i
     let files;
     let filePaths
     console.log(req)
-    
-    if(req.files){
-        files = req.files;
-        filePaths = files.map(file => file.filename)
-    }
+
 
     const obj = await prod_Obj.findOne({ PK_n : pk , ProductID : ID});
     console.log(obj)
     obj.props = JSON.parse(req.body.props);
-    obj.images = filePaths;
+
+        
+    if(req.files){
+        console.log("not empty")
+        files = req.files;
+        filePaths = files.map(file => file.filename)
+        obj.images = filePaths;
+    }
+    
 
     try {
         await obj.save();
@@ -162,6 +166,30 @@ router.delete('/:PID/:pk', async (req, res) => {  //Delete Product
         res.sendStatus(500);
     }
 
+})
+
+router.post('/des/:pID/:pk', async(req, res) => {  //Update Description
+    const { pID, pk } = req.params
+    const { description } = req.body;
+
+    try {
+        const updatedObj = await prod_Obj.findOneAndUpdate(
+            { ProductID: pID, PK_n: pk },
+            { description: description },
+            { new: true, useFindAndModify: true } // `new: true` returns the updated document
+        );
+
+        if (!updatedObj) {
+            return res.status(404).send('Object not found');
+        }
+
+        res.status(200).json(updatedObj); 
+    }
+    
+    catch (error) {
+        console.error(error);
+        res.sendStatus(500);
+    }
 })
 
 export default router
