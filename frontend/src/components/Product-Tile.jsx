@@ -36,7 +36,7 @@ const ProductTile = ({tileprops, productData, index, features}) => {  //features
     return (
     <div className='relative group'>
         <div className='w-[300px] h-[300px] bg-gray-300'
-              style = {{ backgroundImage: `url('https://techgen-store-server.onrender.com/${img_paths[0]}')`, 
+              style = {{ backgroundImage: `url('https://techgen-store-server.onrender.com/uploads/${img_paths[0]}')`, 
                          backgroundSize: 'cover', 
                          backgroundPosition: 'center' }}
         ></div>
