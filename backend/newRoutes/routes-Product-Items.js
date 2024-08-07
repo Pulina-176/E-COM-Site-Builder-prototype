@@ -89,6 +89,7 @@ router.patch('/:ID/:pk', upload, async(req,res) => {          //Update product i
         await obj.save();
         res.send('Files uploaded and paths saved to database successfully');
     } catch (error) {
+        console.log("New Fucking Error boy!",error)
         res.status(500).send(error);
     }
 })
