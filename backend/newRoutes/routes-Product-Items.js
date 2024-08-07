@@ -2,8 +2,10 @@ import express from "express";
 import multer from 'multer';
 import path from 'path';
 import { prod_Obj } from "../newModels/Product-Objects.js";
+import dotenv from 'dotenv';
+dotenv.config();
 
-const imgDir = process.env.imagePath || '../frontend/public/images';
+const imgDir = process.env.imagePath;
 
 const router = express();
 const storage = multer.diskStorage({
