@@ -36,7 +36,7 @@ const ProductTile = ({tileprops, productData, index, features}) => {  //features
     return (
     <div className='relative group'>
         <div className='w-[300px] h-[300px] bg-gray-300'
-              style = {{ backgroundImage: `url('/images/${img_paths[0]}')`, 
+              style = {{ backgroundImage: `url('https://techgen-store-server.onrender.com/${img_paths[0]}')`, 
                          backgroundSize: 'cover', 
                          backgroundPosition: 'center' }}
         ></div>
@@ -46,7 +46,7 @@ const ProductTile = ({tileprops, productData, index, features}) => {  //features
         <div className="absolute top-0 right-0 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             {isDescription === 1 && <CreateDescription productID={PID} pk_n={pk}/>}
             <UpdateItemForm propertyFields={allProps[index]} ID={pIDList[index]} pK={pk} comType="Product"/>
-            <button className="bg-red-500 text-white px-4 py-2" onClick={Delete}>Delete</button>
+            <button className="bg-yellow-500 text-white px-4 py-2" onClick={Delete}>Delete</button>
         </div>
     </div>
     )
