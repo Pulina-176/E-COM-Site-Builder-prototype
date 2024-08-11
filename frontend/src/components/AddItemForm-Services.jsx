@@ -3,6 +3,9 @@ import { AiFillCloseSquare } from "react-icons/ai";
 import axios from 'axios';
 import RichTextEditor from './RichTextEditor';
 
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { app } from '../firebase';
+
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const AddItemForm_Services = ({propertyFields, sID}) => {
@@ -53,60 +56,66 @@ const AddItemForm_Services = ({propertyFields, sID}) => {
         console.log(description)
     }
 
-    const saveItem = () => {
-        if (images.length > 3) {
-            alert('The maximum no. of images for a item is limited to 3 in this update. Please upload 3 or less.')
-            setImages([])
-            return 0
-        } 
+    const [image, setImage] = useState(undefined) // Image file to be uploaded
+    const [imagePercent, setImagePercent] = useState(0) //Image upload progress
 
-        const formData = new FormData();   //create a FormData object
+    const handleFileUpload = async (image) => {
+        const storage = getStorage(app);
+        const fileName = new Date().getTime() + '-' + image.name;
+        const storageRef = ref(storage, fileName);
+        const uploadTask = uploadBytesResumable(storageRef, image);
+    
+        return new Promise((resolve, reject) => {
+            uploadTask.on(
+                'state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    setImagePercent(Math.round(progress));
+                },
+                (error) => {
+                    console.error(error);
+                    alert("Error uploading image", error);
+                    reject(error);
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        resolve(downloadURL); // Resolve the promise with the download URL
+                    });
+                }
+            );
+        });
+    };
+
+    const saveItem = async() => {
+
+        const imageURL = await handleFileUpload(image);
+
+        const formData = {}   //create a FormData object
 
         const tileData = {}
         propertyFields.map((prop) => {
             tileData[prop] = document.getElementById(prop).value
         })
-        console.log(JSON.stringify(tileData))
-        formData.append('props', JSON.stringify(tileData)) //Insert the field inputs
+        formData['props'] = JSON.stringify(tileData) //Insert the field inputs
 
-        formData.append('PK_n', JSON.stringify(nextPK))    //The primary key number value. calculated using the nexPK prop which was drilled using function getLastPK ()
+        formData['PK_n'] = JSON.stringify(nextPK)    //The primary key number value. calculated using the nexPK prop which was drilled using function getLastPK ()
 
-        formData.append('ServiceID', sID); //Track the Product ID number accurately
+        formData['ServiceID'] = sID; //Track the Product ID number accurately
 
-        for (let i = 0; i < images.length; i++) {
-            formData.append('images', images[i]);
-        }
+        formData['images'] = [imageURL] //Insert the image URL
+
 
         if(isMiniDes){
-            formData.append('Mini_Description', description)
+            formData['Mini_Description'] = description
         }
 
-        axios.post(`${backendUrl}/services`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
+        axios.post(`${backendUrl}/services`, formData)
              .then(() => {
                 alert("Added New Item")
                 location.reload()
              }) 
              .catch((error) => {console.log(error); alert(`Error: ${error}`)})
-    }
-
-    const [images, setImages] = useState([]);  //Images saved in this array temporarily
-
-    const handleFileChanges = (event) => { //For image file uploading (temporary)
-        const files = Array.from(event.target.files);
-        setImages(files);
-    }
-
-    const removeFile = (index) => {  //Remove temporarily uploaded files
-        setImages(images.filter((_,ind) => ind !== index))
-    }
-
-    useEffect (() => {
-        console.log(images)
-    }, [images])
+    } 
 
     return (
     <>
@@ -139,9 +148,9 @@ const AddItemForm_Services = ({propertyFields, sID}) => {
                 <div className='w-[50%] flex flex-col h-[auto] justify-start'>
                     <input type="file" 
                             className="self-center file-input file-input-bordered file-input-info w-full max-w-xs" 
-                            multiple
-                            onChange={handleFileChanges}/>
-                    {images.length > 0 && (
+                            accept='image/*'
+                            onChange={(e)=>setImage(e.target.files[0])}/>
+                    {/* {images.length > 0 && (
                     <div className='self-start pl-20 mt-4'>
                         <ul>
                             {images.map((file, index) => (
@@ -152,7 +161,7 @@ const AddItemForm_Services = ({propertyFields, sID}) => {
                         </ul>
 
                     </div>
-                )}          
+                )}           */}
                 </div>
             </div> 
             {(isMiniDes? <div className='mx-16 my-8 bg-gray-100'><RichTextEditor initialValue={"Type your description here"} onType={getDescriptionText} /></div> : <></>)}

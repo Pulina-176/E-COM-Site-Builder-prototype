@@ -24,7 +24,7 @@ const ServiceCard = ({tileprops, serviceData, index}) => {
   return (
     <div className='relative group mb-5'>
         <div className='w-[400px] h-[250px] bg-gray-300'
-              style = {{ backgroundImage: `url('/images/${img_paths[0]}')`,
+              style = {{ backgroundImage: `url('${img_paths[0]}')`,
                          backgroundSize: 'cover', 
                          backgroundPosition: 'center' }}
         ></div>

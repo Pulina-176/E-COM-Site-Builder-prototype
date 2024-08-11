@@ -1,56 +1,16 @@
 import express from "express";
-import multer from 'multer';
 import path from 'path';
 import { prod_Obj } from "../newModels/Product-Objects.js";
 
 const router = express();
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, `../frontend/public/images`);
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now() + '-' + file.originalname);
-    }
-});
 
-function checkFileType(file, cb) {
-    // Allowed extensions
-    const filetypes = /jpeg|jpg|png|gif/;
-    // Check extension
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    // Check mime
-    const mimetype = filetypes.test(file.mimetype);
-
-    if (mimetype && extname) {
-        return cb(null, true);
-    } else {
-        cb('Error: Images Only!');
-    }
-}
-
-const upload = multer({
-    storage: storage,
-    limits: {fileSize: 3000000},
-    fileFilter: function(req, file, cb){
-        checkFileType(file,cb);
-    }
-}).array('images', 3)
-
-router.post('/', upload, async(req, res) => {
-    let files;
-    let filePaths
-    console.log(req)
-    
-    if(req.files){
-        files = req.files;
-        filePaths = files.map(file => file.filename)
-    }
+router.post('/', async(req, res) => {
 
     const newobj = new prod_Obj();
     newobj.ProductID = req.body.ProductID;
     newobj.PK_n = req.body.PK_n;
     newobj.props = JSON.parse(req.body.props);
-    newobj.images = filePaths;
+    newobj.images = req.body.images;
 
     try {
         await newobj.save();
@@ -60,25 +20,13 @@ router.post('/', upload, async(req, res) => {
     }
 })
 
-router.patch('/:ID/:pk', upload, async(req,res) => {          //Update product items
+router.patch('/:ID/:pk', async(req,res) => {          //Update product items
     const {ID, pk} = req.params
-
-    let files;
-    let filePaths
-    console.log(req)
-
 
     const obj = await prod_Obj.findOne({ PK_n : pk , ProductID : ID});
     console.log(obj)
     obj.props = JSON.parse(req.body.props);
-
-        
-    if(req.files){
-        console.log("not empty")
-        files = req.files;
-        filePaths = files.map(file => file.filename)
-        obj.images = filePaths;
-    }
+    obj.images = req.body.images;
     
 
     try {

@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { AiFillCloseSquare } from "react-icons/ai";
 import RichTextEditor from './RichTextEditor';
 
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { app } from '../firebase';
+
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const UpdateItemForm = ({propertyFields, ID, pK, comType}) => {
@@ -63,14 +66,35 @@ const UpdateItemForm = ({propertyFields, ID, pK, comType}) => {
         fetchData();
     }, [isOpen, ID, pK]);
 
-    const [images, setImages] = useState([]);  //Images saved in this array temporarily
-    const handleFileChanges = (event) => {
-        const files = Array.from(event.target.files);
-        setImages(files);
-    }
-    useEffect (() => {
-        console.log(images)
-    }, [images])
+    const [image, setImage] = useState(undefined) // Image file to be uploaded
+    const [imagePercent, setImagePercent] = useState(0) //Image upload progress
+
+    const handleFileUpload = async (image) => {
+        const storage = getStorage(app);
+        const fileName = new Date().getTime() + '-' + image.name;
+        const storageRef = ref(storage, fileName);
+        const uploadTask = uploadBytesResumable(storageRef, image);
+    
+        return new Promise((resolve, reject) => {
+            uploadTask.on(
+                'state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    setImagePercent(Math.round(progress));
+                },
+                (error) => {
+                    console.error(error);
+                    alert("Error uploading image", error);
+                    reject(error);
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        resolve(downloadURL); // Resolve the promise with the download URL
+                    });
+                }
+            );
+        });
+    };
 
     const [description, setDescription] = useState("") //Rich Text Editor value (state to track current changes in editor)
 
@@ -78,40 +102,30 @@ const UpdateItemForm = ({propertyFields, ID, pK, comType}) => {
         setDescription(text)
     }
 
-    const updateFunction = () => {
-        if (images.length > 3) {
-            alert('The maximum no. of images for a item is limited to 3 in this update. Please upload 3 or less.')
-            setImages([])
-            return 0
-        } 
+    const updateFunction = async () => {
 
-        const formData = new FormData();   //create a FormData object
+        const imageURL = await handleFileUpload(image);
+
+        const formData = {};   //create a FormData object
 
         const tileData = {}
         propertyFields.map((prop) => {
             tileData[prop] = document.getElementById(prop).value
         })
-        console.log(JSON.stringify(tileData))
-        formData.append('props', JSON.stringify(tileData)) //Insert the field inputs
+        formData['props'] = JSON.stringify(tileData) //Insert the field inputs
 
-        for (let i = 0; i < images.length; i++) {
-            formData.append('images', images[i]);
-        }
+        formData['images'] = [imageURL] //Insert the image URL
 
         if(comType === "Service"){
-            console.log("check pass")
-            formData.append('Mini_Description', description)
+            formData['Mini_Description'] = description
         }
 
-        axios.patch(getANDpatchURL, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })   .then(() => {
+        axios.patch(getANDpatchURL, formData)   
+             .then(() => {
                     alert("Updated item")
                     location.reload()
                 })
-             .catch((error) => {console.log(error)})      
+             .catch((error) => {console.log(error); alert(`Error: ${error}`)})      
           
     }
 
@@ -143,9 +157,9 @@ const UpdateItemForm = ({propertyFields, ID, pK, comType}) => {
                     <div className='w-[50%] flex flex-col h-[auto] justify-start'>
                         <input type="file" 
                                 className="self-center file-input file-input-bordered file-input-info w-full max-w-xs" 
-                                multiple
-                                onChange={handleFileChanges}/>
-                        {images.length > 0 && (
+                                accept='image/*'
+                                onChange={(e)=>setImage(e.target.files[0])}/>
+                        {/* {images.length > 0 && (
                         <div className='self-start pl-20 mt-4'>
                             <ul>
                                 {images.map((file, index) => (
@@ -156,7 +170,7 @@ const UpdateItemForm = ({propertyFields, ID, pK, comType}) => {
                             </ul>
 
                         </div>
-                    )} 
+                    )}  */}
                     {(isMiniDes? <div className='mx-16 my-8 bg-gray-100'><RichTextEditor initialValue={`${desc}`} onType={getDescriptionText} /></div> : <></>)}
                     <button className="self-center btn m-4" onClick={updateFunction}>Finish & Save</button>            
                     </div>
