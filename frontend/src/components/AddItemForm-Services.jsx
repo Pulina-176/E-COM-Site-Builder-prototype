@@ -88,7 +88,11 @@ const AddItemForm_Services = ({propertyFields, sID}) => {
 
     const saveItem = async() => {
 
-        const imageURL = await handleFileUpload(image);
+        let imageURL = "null" //Default image URL
+
+        if (image!=undefined) {
+            imageURL = await handleFileUpload(image);
+        }
 
         const formData = {}   //create a FormData object
 
@@ -102,8 +106,9 @@ const AddItemForm_Services = ({propertyFields, sID}) => {
 
         formData['ServiceID'] = sID; //Track the Product ID number accurately
 
-        formData['images'] = [imageURL] //Insert the image URL
-
+        if(imageURL!="null"){
+            formData['images'] = [imageURL] //Insert the image URL
+        }
 
         if(isMiniDes){
             formData['Mini_Description'] = description

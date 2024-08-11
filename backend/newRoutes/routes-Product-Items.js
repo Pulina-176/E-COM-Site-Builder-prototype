@@ -10,7 +10,9 @@ router.post('/', async(req, res) => {
     newobj.ProductID = req.body.ProductID;
     newobj.PK_n = req.body.PK_n;
     newobj.props = JSON.parse(req.body.props);
-    newobj.images = req.body.images;
+    if(req.body.images){
+        newobj.images = req.body.images;
+    }
 
     try {
         await newobj.save();
@@ -26,7 +28,9 @@ router.patch('/:ID/:pk', async(req,res) => {          //Update product items
     const obj = await prod_Obj.findOne({ PK_n : pk , ProductID : ID});
     console.log(obj)
     obj.props = JSON.parse(req.body.props);
-    obj.images = req.body.images;
+    if(req.body.images){
+        obj.images = req.body.images;
+    }
     
 
     try {
