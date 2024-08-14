@@ -14,8 +14,10 @@ const AddCommodity = () => {
 
   const list = ["Home", "Products", "Services", "Contact Us"]
 
-  const [typePK, setTypePK] = useState(["String"])
-  const [types, setTypes] = useState(["String"])
+  const [typePK, setTypePK] = useState(["String"])  // Title field
+  const [types, setTypes] = useState(["String"])    // Other fields
+
+  const [isPrice, setIsPrice] = useState(0) // If a Price field exist or not?
 
   const genProp = () => { // add a prop field to the prop no. of items defining list (related with delProp)
     setTypes([...types, "String"])
@@ -39,9 +41,9 @@ const AddCommodity = () => {
     //checking the toggle buttons dedicated for the feature string. 
     // FeatureString is a string which contains information on...
     // [image(s), View only/not?, show fieldname on tiles?, description page?]
-    let featStr = [toggle_img, toggle_pur, toggle_shw, toggle_des] 
+    let featStr = [toggle_prc, toggle_pur, toggle_shw, toggle_des] 
 
-    if (com_Type == "Service") {featStr = [toggle_img, toggle_pur, toggle_shw, toggle_des, toggle_service_des]}
+    if (com_Type == "Service") {featStr = [toggle_prc, toggle_pur, toggle_shw, toggle_des, toggle_service_des]}
 
     //Fieldmap creation 
     const Fieldmap = {}    
@@ -122,7 +124,7 @@ const AddCommodity = () => {
   //Toggle Button operations
   const [tileValues, setTileValues] = useState([]); //on-off Tile values
                                                     //Toggle-button marker variables
-  const [toggle_img, setToggleIMG] = useState(0);    //Images enabled on tile
+  const [toggle_prc, setTogglePRC] = useState(0);    //Price Field is existing for commodity
   const [toggle_pur, setTogglePUR] = useState(0);    //Purchasing option for items OR only viewing
   const [toggle_shw, setToggleSHW] = useState(0);    //show field name on tile
   const [toggle_des, setToggleDES] = useState(0);    //enable description page
@@ -143,19 +145,21 @@ const AddCommodity = () => {
     if (checkbox) {
       const isChecked = checkbox.checked;
       if (isChecked){
-          if (id=='toggle-img') setToggleIMG(1)
+          if (id=='toggle-prc') setTogglePRC(1)
           else if (id=='toggle-shw') setToggleSHW(1)
           else if (id=='toggle-pur') setTogglePUR(1)
           else if (id=='toggle-des') setToggleDES(1)
           else if (id=='toggle-service-des') setToggleServiceDES(1)
       } 
       else{
-          if (id=='toggle-img') setToggleIMG(0)
+          if (id=='toggle-prc') setTogglePRC(0)
           else if (id=='toggle-shw') setToggleSHW(0)
           else if (id=='toggle-pur') setTogglePUR(0)
           else if (id=='toggle-des') setToggleDES(0)
           else if (id=='toggle-service-des') setToggleServiceDES(0)
       }
+
+      if (id=='toggle-prc' && isChecked==0) setTogglePUR(0)
       console.log(`Checkbox ${id} is ${isChecked ? 'checked' : 'unchecked'}`);
     }
   };
@@ -277,10 +281,11 @@ const AddCommodity = () => {
                     ))}
                   </div>
 
+                  {/* Commodity Features determining toggle buttons */}
                   <div>
                       <div className='mx-[60px] flex flex-row items-center mb-4'>
-                        <p>Image(s)</p>
-                        <input id={"toggle-img"} type="checkbox" className="toggle toggle-error mx-[10px]" onChange={handleToggle("toggle-img")} />
+                        <p>Price Field</p>
+                        <input id={"toggle-prc"} type="checkbox" className="toggle toggle-error mx-[10px]" onChange={handleToggle("toggle-prc")} />
                       </div>
                       <div className='mx-[60px] flex flex-row items-center mb-4'>
                         <p>Buy/Book option</p>
