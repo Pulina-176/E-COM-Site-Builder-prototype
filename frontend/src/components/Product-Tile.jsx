@@ -45,7 +45,7 @@ const ProductTile = ({tileprops, productData, index, features}) => {  //features
         ))}
         <div className="absolute top-0 right-0 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             {isDescription === 1 && <CreateDescription productID={PID} pk_n={pk}/>}
-            <UpdateItemForm propertyFields={allProps[index]} ID={pIDList[index]} pK={pk} comType="Product"/>
+            <UpdateItemForm propertyFields={allProps[index]} ID={pIDList[index]} pK={pk} comType="Product" features={features}/>
             <button className="bg-red-500 text-white px-4 py-2" onClick={Delete}>Delete</button>
         </div>
     </div>

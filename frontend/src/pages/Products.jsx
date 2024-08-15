@@ -115,7 +115,7 @@ const Products = () => {
                 </div>
               ))}
             </div>
-            <AddItemForm propertyFields={allProps[index]} pID={pIDList[index]}/>
+            <AddItemForm propertyFields={allProps[index]} pID={pIDList[index]} features={features[index]}/>
           </div>
           </PropContext.Provider>
         </div>

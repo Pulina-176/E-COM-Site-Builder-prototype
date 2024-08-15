@@ -8,7 +8,7 @@ import { app } from '../firebase';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-const AddItemForm_Services = ({propertyFields, sID}) => {
+const AddItemForm_Services = ({propertyFields, sID, features}) => {
 
     async function getFeatureString(ID) { //get Feature String
         const packet = await axios.get(`${backendUrl}/custom-s-com/${ID}`) 
@@ -16,6 +16,8 @@ const AddItemForm_Services = ({propertyFields, sID}) => {
         return fs
     }
     const [isMiniDes, setMiniDes] = useState(false); //Rich Text Editor visible/not-visible - Depends on the 5th number in the feature string
+    const isPrice = features[0] // Check if there is a Price field to insert a Price?
+
 
     async function getLastPK(ID) {
         const packet = await axios.get(`${backendUrl}/services/nxt-pk/${ID}`)
@@ -169,6 +171,9 @@ const AddItemForm_Services = ({propertyFields, sID}) => {
                 )}           */}
                 </div>
             </div> 
+            {isPrice === 1 && 
+                    <input id="price" type="text" placeholder="LKR 100.00" className="self-center input border-0 rounded-[2px] w-full max-w-xs max-h-[36px]" />
+                    }
             {(isMiniDes? <div className='mx-16 my-8 bg-gray-100'><RichTextEditor initialValue={"Type your description here"} onType={getDescriptionText} /></div> : <></>)}
             <button className="self-center btn m-4" onClick={saveItem}>Finish & Save</button>   
         </div>

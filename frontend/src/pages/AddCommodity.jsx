@@ -17,8 +17,6 @@ const AddCommodity = () => {
   const [typePK, setTypePK] = useState(["String"])  // Title field
   const [types, setTypes] = useState(["String"])    // Other fields
 
-  const [isPrice, setIsPrice] = useState(0) // If a Price field exist or not?
-
   const genProp = () => { // add a prop field to the prop no. of items defining list (related with delProp)
     setTypes([...types, "String"])
     console.log(types)
@@ -40,7 +38,7 @@ const AddCommodity = () => {
   
     //checking the toggle buttons dedicated for the feature string. 
     // FeatureString is a string which contains information on...
-    // [image(s), View only/not?, show fieldname on tiles?, description page?]
+    // [Price field?, view-only/buy?, show fieldname on tiles?, description page?]
     let featStr = [toggle_prc, toggle_pur, toggle_shw, toggle_des] 
 
     if (com_Type == "Service") {featStr = [toggle_prc, toggle_pur, toggle_shw, toggle_des, toggle_service_des]}
@@ -57,7 +55,7 @@ const AddCommodity = () => {
                         Fieldmap[name] = {
                           "type": type,  //data type
                           "on_off": on_off, //on tile or off tile?
-                          "isPK": isPK //Changed to checking Title field?
+                          "isPK": isPK //Changed to checking Title field? (not primary key)
                         }
                 })
     
@@ -159,7 +157,17 @@ const AddCommodity = () => {
           else if (id=='toggle-service-des') setToggleServiceDES(0)
       }
 
-      if (id=='toggle-prc' && isChecked==0) setTogglePUR(0)
+      if (id=='toggle-prc' && isChecked==1) {
+        const checkbox2 = document.getElementById(`toggle-pur`);
+        checkbox2.disabled = false;
+      }
+
+      if (id=='toggle-prc' && isChecked==0) {
+        const checkbox2 = document.getElementById(`toggle-pur`);
+        checkbox2.checked = false;
+        checkbox2.disabled = true;
+        setTogglePUR(0)
+      }
       console.log(`Checkbox ${id} is ${isChecked ? 'checked' : 'unchecked'}`);
     }
   };
@@ -289,7 +297,7 @@ const AddCommodity = () => {
                       </div>
                       <div className='mx-[60px] flex flex-row items-center mb-4'>
                         <p>Buy/Book option</p>
-                        <input id={"toggle-pur"} type="checkbox" className="toggle toggle-warning mx-[10px]" onChange={handleToggle("toggle-pur")} />
+                        <input id={"toggle-pur"} type="checkbox" className="toggle toggle-warning mx-[10px]" onChange={handleToggle("toggle-pur")} disabled />
                       </div>
                       <div className='mx-[60px] flex flex-row items-center mb-4'>
                         <p>Show fieldnames on tile</p>

@@ -21,6 +21,8 @@ const Services = () => {
     const [tileProps, setTileProps] = useState([]);     //tile properties
     const [allProps, setAllProps] = useState([]);       //all properties  
     const [serviceData, setServiceData] = useState({}); //Data of individual Service items 
+    const [features, setFeatures] = useState([]);       //Features of product categories (feature string)   
+
 
     // Fetch data function wrapped in useCallback to avoid unnecessary re-renders
     const fetchData = useCallback(async () => {
@@ -32,6 +34,8 @@ const Services = () => {
         const temp3 = [];           // Intermediate variable for pIDList
         const tilePropsTemp = [];   // Intermediate variable for tileProps
         const allPropsTemp = [];    // Intermediate variable for allProps
+        const feats = [];           // Intermediate variable for features
+
 
         // Clear state variables for best performance
         setTileProps([]);    
@@ -44,6 +48,8 @@ const Services = () => {
 
         temp2.push(block.GroupName);
         temp3.push(block.ServiceID);
+        feats.push(block.Feature_string);
+
 
         for (const prop in block.Field_info){
             if (block.Field_info[prop].on_off === 1){
@@ -61,6 +67,8 @@ const Services = () => {
         setAllProps(allPropsTemp);
         setServiceList(temp2);
         setSIDList(temp3);
+        setFeatures(feats)
+
 
         // Fetch service data based on service IDs (items under single category)
         if (temp3.length > 0) {
@@ -109,11 +117,11 @@ const Services = () => {
                 <div className='ml-[60px] flex flex-row'>
                 {serviceData[sIDList[index]]?.map((value, i) => (
                     <div key={i} className='mx-[20px]'>
-                      <ServiceCard tileprops={tileProps[index]} serviceData={value} index={index}/>
+                      <ServiceCard tileprops={tileProps[index]} serviceData={value} index={index} features={features}/>
                     </div>
                 ))}
                 </div>
-                <AddItemForm_Services propertyFields={allProps[index]} sID={sIDList[index]}/>
+                <AddItemForm_Services propertyFields={allProps[index]} sID={sIDList[index]} features={features[index]}/>
             </div>
             </PropContext.Provider>
         </div>

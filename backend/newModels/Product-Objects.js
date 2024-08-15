@@ -22,7 +22,7 @@ const Obj = mongoose.Schema(
             type: String,
             required: false
         },
-        price: { //price in cents
+        price: { //price in LKR
             type: Number,
             required: false
         },
