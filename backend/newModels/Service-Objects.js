@@ -21,6 +21,10 @@ const Obj = mongoose.Schema(
         Mini_Description: {
             type: String
         },
+        price: { //price in LKR
+            type: Number,
+            required: false
+        },
         description: String
         //sold_out: {boolean}
         //discount: {percentage}

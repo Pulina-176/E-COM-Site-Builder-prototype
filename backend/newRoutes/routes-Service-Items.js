@@ -14,6 +14,9 @@ router.post('/', async(req, res) => {
     if(req.body.images){
         newobj.images = req.body.images;
     }
+    if (req.body.price) {
+        newobj.price = req.body.price;
+    }
     newobj.Mini_Description = req.body.Mini_Description
 
     try {
@@ -32,6 +35,9 @@ router.patch('/:ID/:pk', async(req,res) => {          //Update product items
     obj.props = JSON.parse(req.body.props);
     if(req.body.images){
         obj.images = req.body.images;
+    }
+    if (req.body.price) {
+        obj.price = req.body.price;
     }
     obj.Mini_Description = req.body.Mini_Description
 

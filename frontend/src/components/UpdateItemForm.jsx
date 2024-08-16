@@ -119,6 +119,11 @@ const UpdateItemForm = ({propertyFields, ID, pK, comType, features}) => {
 
         formData['images'] = [imageURL] //Insert the image URL
 
+        if (isPrice === 1) {
+            const price = document.getElementById("price")
+            formData['price'] = price ? price.value : null //Insert the price if available
+        }
+        
         if(comType === "Service"){
             formData['Mini_Description'] = description
         }
