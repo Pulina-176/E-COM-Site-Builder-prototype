@@ -1,6 +1,4 @@
 import express from "express";
-import multer from 'multer';
-import path from 'path';
 import { serv_Obj } from "../newModels/Service-Objects.js";
 
 const router = express();

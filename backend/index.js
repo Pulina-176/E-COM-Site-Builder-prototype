@@ -8,6 +8,7 @@ import servObjRoutes from "./newRoutes/routes-Table-Services.js";
 import prodRoutes from "./newRoutes/routes-Product-Items.js";
 import servRoutes from "./newRoutes/routes-Service-Items.js";
 import displayRoutes from "./newRoutes/routes-siteUI.js";
+import authRoutes from "./newRoutes/routes-admin-auth.js";
 
 import cors from 'cors';
 
@@ -19,7 +20,10 @@ const mongoDBURL = process.env.mongoDBURL;
 //Middleware for parsing request body
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({
+    origin: {},
+    credentials: true,
+}));
 
 // app.use(
 //     cors({
@@ -39,6 +43,7 @@ app.use('/custom-s-com', servObjRoutes); //Routes of routes-Table-Services.js
 app.use('/products', prodRoutes); //Routes of routes-Product-Objects.js
 app.use('/services', servRoutes); //Routes of routes-Service-Objects.js
 app.use('/display', displayRoutes); //Routes of routes-siteUI.js
+app.use('/admin-auth', authRoutes); //Routes of routes-admin-auth.js
 
 mongoose
     .connect(mongoDBURL)
