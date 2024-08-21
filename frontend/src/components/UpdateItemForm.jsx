@@ -8,11 +8,14 @@ import { app } from '../firebase';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-const UpdateItemForm = ({propertyFields, ID, pK, comType}) => {
+const UpdateItemForm = ({propertyFields, ID, pK, comType, features}) => {
 
     const [isMiniDes, setMiniDes] = useState(false); //Rich Text Editor visible/not-visible - Depends on the 5th number in the feature string
     //This is a feature only for service type commodities
     const [desc, setDesc] = useState(``);  //minidescription initial text at loading if available - (temporary)
+
+    const isPrice = features[0] // Check if there is a Price field to insert a Price?
+
 
     let getANDpatchURL;  //same URL is used within this component to fetch and patch data
     switch(comType){
@@ -116,6 +119,11 @@ const UpdateItemForm = ({propertyFields, ID, pK, comType}) => {
 
         formData['images'] = [imageURL] //Insert the image URL
 
+        if (isPrice === 1) {
+            const price = document.getElementById("price")
+            formData['price'] = price ? price.value : null //Insert the price if available
+        }
+        
         if(comType === "Service"){
             formData['Mini_Description'] = description
         }
@@ -156,7 +164,7 @@ const UpdateItemForm = ({propertyFields, ID, pK, comType}) => {
                     </div>
                     <div className='w-[50%] flex flex-col h-[auto] justify-start'>
                         <input type="file" 
-                                className="self-center file-input file-input-bordered file-input-info w-full max-w-xs" 
+                                className="self-center mb-[10px] file-input file-input-bordered file-input-info w-full max-w-xs" 
                                 accept='image/*'
                                 onChange={(e)=>setImage(e.target.files[0])}/>
                         {/* {images.length > 0 && (
@@ -171,6 +179,9 @@ const UpdateItemForm = ({propertyFields, ID, pK, comType}) => {
 
                         </div>
                     )}  */}
+                    {isPrice === 1 && 
+                    <input id="price" type="text" placeholder="LKR 100.00" className="self-center input border-0 rounded-[2px] w-full max-w-xs max-h-[36px]" />
+                    }
                     {(isMiniDes? <div className='mx-16 my-8 bg-gray-100'><RichTextEditor initialValue={`${desc}`} onType={getDescriptionText} /></div> : <></>)}
                     <button className="self-center btn m-4" onClick={updateFunction}>Finish & Save</button>            
                     </div>

@@ -16,6 +16,8 @@ const AddItemForm = ({propertyFields, pID, features}) => {
     }
     const [nextPK, setNext] = useState(0) //State to store the next primary key value
 
+    const isPrice = features[0] // Check if there is a Price field to insert a Price?
+
     useEffect(() => {
         const fetchNextPK = async () => {
             const pk = await getLastPK(pID);
@@ -132,8 +134,11 @@ const AddItemForm = ({propertyFields, pID, features}) => {
                         </ul> */}
 
                     </div>
-               
-                <button className="self-center btn m-4" onClick={Savefunction}>Finish & Save</button>            
+
+                    {isPrice === 1 && 
+                    <input id="price" type="text" placeholder="LKR 100.00" className="self-center input border-0 rounded-[2px] w-full max-w-xs max-h-[36px]" />
+                    }
+                    <button className="self-center btn m-4" onClick={Savefunction}>Finish & Save</button>            
                 </div>
             </div>  
         </div>

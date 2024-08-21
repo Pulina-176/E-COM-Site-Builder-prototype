@@ -18,6 +18,9 @@ const ProductTile_user = ({tileprops, productData, features, index}) => { //tile
 
     const viewDescriptionPage = features[3]
 
+    const isPrice = features[0] //check if the price is enabled to be displayed
+    const Price = productData["price"]
+
     return (
     <div className='card relative group shadow-xl'>
         <div className='w-[300px] h-[300px] bg-gray-300'
@@ -34,6 +37,10 @@ const ProductTile_user = ({tileprops, productData, features, index}) => { //tile
             {productData.props[value]}
         </div>
         ))}
+        {isPrice === 1 &&
+        <div className='w-[300px] h-[auto] pt-[4px] px-[15px] bg-gray-100 text-[24px]'>LKR {Price}</div>
+        }
+
         <div className='w-[300px] h-[10px] bg-gray-100'></div>
 
         <div className="absolute top-0 right-0 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

@@ -5,7 +5,7 @@ import { PropContext } from './PropContext'
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-const ServiceCard = ({tileprops, serviceData, index}) => {
+const ServiceCard = ({tileprops, serviceData, index, features}) => {
 
   const {allProps, sIDList} = useContext(PropContext)
 
@@ -51,7 +51,7 @@ const ServiceCard = ({tileprops, serviceData, index}) => {
       `}</style>
         </div>
         <div className="absolute top-0 right-0 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <UpdateItemForm propertyFields={allProps[index]} ID={sIDList[index]} pK={pk} comType="Service"/>
+            <UpdateItemForm propertyFields={allProps[index]} ID={sIDList[index]} pK={pk} comType="Service" features={features}/>
             <button className="bg-red-500 text-white px-4 py-2" onClick={Delete}>Delete</button>
         </div>
     </div>

@@ -10,6 +10,7 @@ import ViewCommodity from './pages/ViewCommodity';
 import UpdateCommodity from './pages/UpdateCommodity';
 import Products from './pages/Products';
 import Services from './pages/Services';
+import PrivateRoutes from './components/PrivateRoutes';
 
 
 import Products_user from './pages-user/Products-user';
@@ -19,6 +20,10 @@ import Landing_Page_User from './pages-user/Landing-user';
 const App = () => {
   return (
     <Routes>
+
+        <Route path='/admin-auth' element={<AdminAuth/>}/>
+
+      <Route element={<PrivateRoutes/>}>
         <Route path='/admin' element={<AdminSettings/>}/> 
         <Route path='/admin/visuals' element={<AppearanceSettings/>}/>
         <Route path='/admin/addcom' element={<AddCommodity/>}/>
@@ -26,11 +31,15 @@ const App = () => {
         <Route path='/admin/upcom/:Type/:ID' element={<UpdateCommodity/>}/> 
         <Route path='/admin/products' element={<Products/>}/>
         <Route path='/admin/services' element={<Services/>}/>
-        <Route path='/admin-auth' element={<AdminAuth/>}/>
+      </Route>  
 
         <Route path='/user/products' element={<Products_user/>} />
         <Route path='/user/services' element={<Services_user/>} />
         <Route path='/' element={<Landing_Page_User/>} />
+
+        <Route path='/test' element={<PrivateRoutes/>} /> 
+
+
     </Routes>
   )
 }

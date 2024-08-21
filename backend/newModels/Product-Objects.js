@@ -22,6 +22,14 @@ const Obj = mongoose.Schema(
             type: String,
             required: false
         },
+        price: { //price in LKR
+            type: Number,
+            required: false
+        },
+        // currency: {
+        //     enum: ['USD', 'LKR', 'EUR'],
+        //     required: false
+        // },
         //sold_out: {boolean}
     }
 );

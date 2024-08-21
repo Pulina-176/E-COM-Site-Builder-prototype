@@ -1,6 +1,4 @@
 import express from "express";
-import multer from 'multer';
-import path from 'path';
 import { serv_Obj } from "../newModels/Service-Objects.js";
 
 const router = express();
@@ -13,6 +11,9 @@ router.post('/', async(req, res) => {
     newobj.props = JSON.parse(req.body.props);
     if(req.body.images){
         newobj.images = req.body.images;
+    }
+    if (req.body.price) {
+        newobj.price = req.body.price;
     }
     newobj.Mini_Description = req.body.Mini_Description
 
@@ -32,6 +33,9 @@ router.patch('/:ID/:pk', async(req,res) => {          //Update product items
     obj.props = JSON.parse(req.body.props);
     if(req.body.images){
         obj.images = req.body.images;
+    }
+    if (req.body.price) {
+        obj.price = req.body.price;
     }
     obj.Mini_Description = req.body.Mini_Description
 

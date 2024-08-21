@@ -13,6 +13,9 @@ router.post('/', async(req, res) => {
     if(req.body.images){
         newobj.images = req.body.images;
     }
+    if (req.body.price) {
+        newobj.price = req.body.price;
+    }
 
     try {
         await newobj.save();
@@ -31,6 +34,11 @@ router.patch('/:ID/:pk', async(req,res) => {          //Update product items
     if(req.body.images){
         obj.images = req.body.images;
     }
+    if (req.body.price) {
+        obj.price = req.body.price;
+    }
+    
+    obj.price = req.body.price;
     
 
     try {
