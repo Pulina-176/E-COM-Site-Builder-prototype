@@ -116,7 +116,7 @@ const AddItemForm_Services = ({propertyFields, sID, features}) => {
             formData['Mini_Description'] = description
         }
 
-        axios.post(`${backendUrl}/services`, formData)
+        axios.post(`${backendUrl}/services`, formData, {withCredentials: true})
              .then(() => {
                 alert("Added New Item")
                 location.reload()

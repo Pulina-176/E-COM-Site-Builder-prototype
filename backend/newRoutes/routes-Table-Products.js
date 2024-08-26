@@ -1,5 +1,6 @@
 import express from 'express';
 import { prod_obj_model } from '../newModels/Table-Products.js';
+import { verifyToken } from '../middleware/verifytoken.js'; //middleware to verify token
 
 const router = express.Router();
 
@@ -39,6 +40,7 @@ router.patch('/:ID', async(req,res) => {    //Update Service commodity object
 })
 
 router.get('/', async(req, res)=>{
+
     const results = await prod_obj_model.find({});
     return res.status(200).json(results)
 })

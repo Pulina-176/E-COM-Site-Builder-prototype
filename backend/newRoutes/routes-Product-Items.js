@@ -1,10 +1,12 @@
 import express from "express";
-import path from 'path';
 import { prod_Obj } from "../newModels/Product-Objects.js";
+import { verifyToken } from "../middleware/verifytoken.js";
 
 const router = express();
 
-router.post('/', async(req, res) => {
+router.post('/', verifyToken, async(req, res) => {
+
+    if (req.user.id !== '_jfkeycbx,ootiu') return res.status(401).json({error: 'Unauthorized'})
 
     const newobj = new prod_Obj();
     newobj.ProductID = req.body.ProductID;
@@ -25,7 +27,10 @@ router.post('/', async(req, res) => {
     }
 })
 
-router.patch('/:ID/:pk', async(req,res) => {          //Update product items
+router.patch('/:ID/:pk', verifyToken, async(req,res) => {          //Update product items
+
+    if (req.user.id !== '_jfkeycbx,ootiu') return res.status(401).json({error: 'Unauthorized'})
+
     const {ID, pk} = req.params
 
     const obj = await prod_Obj.findOne({ PK_n : pk , ProductID : ID});
@@ -67,7 +72,10 @@ router.get('/:productID', async(req, res)=>{ //get products by ProductID
 
 })
 
-router.get('/nxt-pk/:productID', async(req, res) => { //gets Primary key for new item.
+router.get('/nxt-pk/:productID', verifyToken, async(req, res) => { //gets Primary key for new item.
+
+    if (req.user.id !== '_jfkeycbx,ootiu') return res.status(401).json({error: 'Unauthorized'})
+
     const {productID} = req.params
     if (!productID) {
         return res.status(400).send('Parameter missing');
@@ -110,7 +118,10 @@ router.get('/:ID/:pk', async(req, res) => {
 
 })
 
-router.delete('/:PID/:pk', async (req, res) => {  //Delete Product
+router.delete('/:PID/:pk', verifyToken, async (req, res) => {  //Delete Product
+
+    if (req.user.id !== '_jfkeycbx,ootiu') return res.status(401).json({error: 'Unauthorized - Not an Admin'})
+
     const { pk, PID } = req.params
     const parsedID = parseInt(PID)
     if (isNaN(parsedID)) return res.sendStatus(400);
@@ -127,7 +138,11 @@ router.delete('/:PID/:pk', async (req, res) => {  //Delete Product
 
 })
 
-router.post('/des/:pID/:pk', async(req, res) => {  //Update Description
+router.post('/des/:pID/:pk', verifyToken, async(req, res) => {  //Update Description
+
+    if (req.user.id !== '_jfkeycbx,ootiu') return res.status(401).json({error: 'Unauthorized - Not an Admin'})
+
+
     const { pID, pk } = req.params
     const { description } = req.body;
 

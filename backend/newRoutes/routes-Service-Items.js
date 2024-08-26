@@ -1,9 +1,13 @@
 import express from "express";
 import { serv_Obj } from "../newModels/Service-Objects.js";
+import { verifyToken } from "../middleware/verifytoken.js";
+
 
 const router = express();
 
-router.post('/', async(req, res) => {
+router.post('/', verifyToken, async(req, res) => {
+
+    if (req.user.id !== '_jfkeycbx,ootiu') return res.status(401).json({error: 'Unauthorized'})
     
     const newobj = new serv_Obj();
     newobj.ServiceID = req.body.ServiceID;
@@ -25,7 +29,10 @@ router.post('/', async(req, res) => {
     }
 })
 
-router.patch('/:ID/:pk', async(req,res) => {          //Update product items
+router.patch('/:ID/:pk', verifyToken, async(req,res) => {          //Update product items
+
+    if (req.user.id !== '_jfkeycbx,ootiu') return res.status(401).json({error: 'Unauthorized'})
+
     const {ID, pk} = req.params
 
     const obj = await serv_Obj.findOne({ PK_n : pk , ServiceID : ID});
@@ -64,7 +71,10 @@ router.get('/:serviceID', async(req, res)=>{ //get all services by ServiceID (al
 
 })
 
-router.get('/nxt-pk/:serviceID', async(req, res) => { //gets Primary key for new item.
+router.get('/nxt-pk/:serviceID', verifyToken, async(req, res) => { //gets Primary key for new item.
+
+    if (req.user.id !== '_jfkeycbx,ootiu') return res.status(401).json({error: 'Unauthorized'})
+
     const {serviceID} = req.params
     if (!serviceID) {
         return res.status(400).send('Parameter missing');
@@ -111,7 +121,10 @@ router.get('/:ID/:pk', async(req, res) => {  //get single item of any category
 
 })
 
-router.delete('/:SID/:pk', async (req, res) => {  //Delete Service
+router.delete('/:SID/:pk', verifyToken, async (req, res) => {  //Delete Service
+
+    if (req.user.id !== '_jfkeycbx,ootiu') return res.status(401).json({error: 'Unauthorized'})
+
     const { pk, SID } = req.params
     const parsedID = parseInt(SID)
     if (isNaN(parsedID)) return res.sendStatus(400);

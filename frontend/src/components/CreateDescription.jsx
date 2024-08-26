@@ -26,7 +26,9 @@ const CreateDescription = ({ productID, pk_n }) => {
     try {
       const response = await axios.post(`${backendUrl}/products/des/${productID}/${pk_n}`, {
         description: description,
-      });
+        },
+        {withCredentials: true}
+      );
 
       if (response.status === 200) {
         alert('Description saved successfully');

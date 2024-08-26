@@ -128,7 +128,7 @@ const UpdateItemForm = ({propertyFields, ID, pK, comType, features}) => {
             formData['Mini_Description'] = description
         }
 
-        axios.patch(getANDpatchURL, formData)   
+        axios.patch(getANDpatchURL, formData, {withCredentials: true})   
              .then(() => {
                     alert("Updated item")
                     location.reload()

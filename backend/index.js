@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
 dotenv.config();
+import cookieParser from "cookie-parser";
 
 import prodObjRoutes from "./newRoutes/routes-Table-Products.js";
 import servObjRoutes from "./newRoutes/routes-Table-Services.js";
@@ -24,6 +25,8 @@ app.use(cors({
     origin: {},
     credentials: true,
 }));
+
+app.use(cookieParser());
 
 // app.use(
 //     cors({

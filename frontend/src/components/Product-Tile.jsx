@@ -29,7 +29,7 @@ const ProductTile = ({tileprops, productData, index, features}) => {  //features
 
     const Delete = () => {
         const PID= productData["ProductID"]
-        axios.delete(`${backendUrl}/products/${PID}/${pk}`) 
+        axios.delete(`${backendUrl}/products/${PID}/${pk}`, {withCredentials: true}) 
         location.reload();
 
         console.log(productData)
