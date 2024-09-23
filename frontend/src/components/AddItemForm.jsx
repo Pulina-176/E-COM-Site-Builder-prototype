@@ -10,7 +10,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const AddItemForm = ({propertyFields, pID, features}) => {
 
     async function getLastPK(ID) {  //get the to be entered primary key of the item (respective to the ProductID)
-        const packet = await axios.get(`${backendUrl}/products/nxt-pk/${ID}`)
+        const packet = await axios.get(`${backendUrl}/products/nxt-pk/${ID}`, {withCredentials: true})
         const pk = packet.data
         return pk
     }
@@ -82,7 +82,7 @@ const AddItemForm = ({propertyFields, pID, features}) => {
 
         formData['images'] = [imageURL] //Insert the image URL
 
-        axios.post(`${backendUrl}/products`, formData)
+        axios.post(`${backendUrl}/products`, formData, {withCredentials: true})
              .then(() => {
                 alert("Added New Item")
                 location.reload()

@@ -15,7 +15,7 @@ const ServiceCard = ({tileprops, serviceData, index, features}) => {
 
   const Delete = () => {
     const PID= serviceData["ServiceID"]
-    axios.delete(`${backendUrl}/services/${PID}/${pk}`)  
+    axios.delete(`${backendUrl}/services/${PID}/${pk}`, {withCredentials: true})  
     location.reload();
 
     console.log(serviceData)
