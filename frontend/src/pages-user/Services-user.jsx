@@ -1,18 +1,22 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useContext } from 'react'
 import Navbar_User from '../components-user/Navbar-user';
 import ServiceCard from '../components/Service-Card';
 import axios from 'axios';
 import Spinner from '../components/Spinner';
 import { PropContext } from '../components/PropContext';
+import { ThemeContext } from '../context/ThemeContext';
+
 
 import AddItemForm_Services from '../components/AddItemForm-Services';
 import ServiceCard_user from '../components-user/Service-Card-user';
-import ServiceCard_user_no_buy from '../components-user/Service-Card-user-no-buy';
+import ServiceCard_user_no_buy from '../components-user/Service-Card-user-no-buy.jsx';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 const Services_user = () => { //Services page in user's POV
+
+    const { theme } = useContext(ThemeContext); // Use context to access theme
 
     const list = ["Home", "Products", "Services", "Contact Us"];
     const [loading, setLoading] = useState(true); // State to handle the loading status
@@ -103,9 +107,12 @@ const Services_user = () => { //Services page in user's POV
   }
     
   return (
-    <div>
+    <div className='pb-[50px]' style={{backgroundColor: theme.body,  color: theme.primaryText}}>
       <Navbar_User pages={list} />
-      <h1 className='font-inter font-extrabold text-4xl ml-[60px] my-[30px]'>Services</h1>
+      <h1 className='font-inter font-extrabold text-4xl ml-[60px] my-[30px]'
+        style={{ color: theme.mainHead }}
+      >
+        Services</h1>
       
       {serviceList.map((item, index) => (
         <div key={index}>

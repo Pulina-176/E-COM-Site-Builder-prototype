@@ -40,6 +40,7 @@ const ProductTile_user_no_buy = ({tileprops, productData, features, index}) => {
         }
 
         <div className='w-[300px] h-[10px] bg-gray-100'></div>
+        
         {viewDescriptionPage === 1 && <DescriptionP product={productData} props={allProps[index]}/>}
 
     </div>

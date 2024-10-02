@@ -6,6 +6,7 @@ import Landing_customize from '../components/visualservice/Landing-customize'
 import { themes } from '../config/colorthemes'
 import { useState } from 'react'
 import axios from 'axios'
+import CarouselCenter from '../components/visualservice/Carousel-terminal'
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -40,11 +41,15 @@ const AppearanceSettings = () => {
             <Navbar pages={list}></Navbar>
             <h1 className='font-inter font-extrabold text-4xl ml-[60px] my-[30px]'>Admin Settings</h1>
             <div className='flex flex-col'>
-                <div className='w-[auto] h-[150px] bg-[#F0F3FF] ml-[60px] rounded-[10px] flex flex-row justify-center items-center'>
-                    <DropDown3 values={themeList} setComType={handleChangeTheme}></DropDown3>
-                    <button className='btn btn-sm btn-accent text-white px-[20px] h-[20px] rounded-[5px] ml-[20px]' onClick={saveTheme}>Save</button>
+                <div className='w-[20%] h-[150px] bg-[#F0F3FF] ml-[60px] rounded-[10px] flex flex-col align-center'>
+                    <p className='font-inter text-xl font-semibold mx-[40px] mt-[20px]'>Theme Setting</p>
+                    <div className='flex flex-row mt-[20px] ml-[50px] gap-8'>
+                        <DropDown3 values={themeList} setComType={handleChangeTheme}></DropDown3>
+                        <button className='btn btn-sm btn-accent text-white px-[20px] rounded-[5px]' onClick={saveTheme}>Save</button>
+                    </div> 
                 </div>
 
+            <div className='flex flex-row'>
                 <div className='w-[40%] my-[40px] h-[auto] bg-[#F0F3FF] ml-[60px] rounded-[10px] flex flex-col'>
                     <p className='font-inter text-xl font-semibold mx-[40px] mt-[20px]'>Site Outlook</p>
                     <div className='flex flex-col mb-[10px]'>
@@ -70,8 +75,20 @@ const AppearanceSettings = () => {
                             <PopupBox_Navbar_color_image/>
                         </div>
                     </div>
+
+                </div>
+
+                <div className='w-[50%] my-[40px] h-[auto] bg-[#F0F3FF] ml-[60px] rounded-[10px] flex flex-col'>
+                        <div className='flex flex-col mb-[10px]'>
+                            <p className='font-inter text-lg mx-[40px] mt-[20px]'>Landing Page Carousel</p>
+                            <hr className='mx-[40px] border-t-1 border-black mb-[15px]'></hr>
+                            <div className='flex flex-col mx-[40px]'>
+                                <CarouselCenter></CarouselCenter>
+                            </div>
+                        </div>
                 </div>
             
+            </div>
             </div>
         </div>
     )

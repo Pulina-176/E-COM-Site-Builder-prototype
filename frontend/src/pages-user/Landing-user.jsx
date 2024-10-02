@@ -2,9 +2,33 @@ import React, {useEffect , useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import Carousel from '../components-user/Carousel';
+import Spinner from '../components/Spinner';
+
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const Landing_Page_User = () => {
+
+  const [images, setImages] = useState([]);
+
+  const [loading, setLoading] = useState(true); // State to handle the loading status
+
+  useEffect(() => {
+    const fetchCarouselData = async () => {
+        try {
+            const response = await axios.get(`${backendUrl}/display`);
+            setImages(response.data.Carousel);
+        } catch (error) {
+            console.error('Error fetching carousel data:', error);
+        } finally {
+            setLoading(false);
+            console.log(images)
+        }
+    };
+
+    fetchCarouselData();
+}, []);
+
 
   let navigate = useNavigate();
 
@@ -71,7 +95,13 @@ const Landing_Page_User = () => {
     };
   }, []);
 
+  // Render a loading message if data is still being fetched
+  if (loading) {
+    return <div><Spinner /></div>;;
+  }
+
   return (
+    <>
     <div className="relative w-full h-[500px] flex justify-center items-center">
         <div
           className='absolute inset-0'
@@ -93,6 +123,12 @@ const Landing_Page_User = () => {
       </div>
 
     </div>
+
+    <div className='my-[100px]'>  
+      <Carousel images={images}></Carousel>
+    </div>
+    
+    </>
   )
 }
 

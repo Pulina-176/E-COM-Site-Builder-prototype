@@ -4,13 +4,13 @@ import { display } from '../newModels/siteUI.js';
 const router = express.Router();
 
 router.patch('/', async (req, res) => {
-    const { Landing, Other, colortheme } = req.body;
+    const { Landing, Other, colortheme, Carousel } = req.body;
     const id = "one"; 
 
     try {
         const updated = await display.findOneAndUpdate(
             { id: "one" }, // Match the document with id "one"
-            { id, Landing, Other, colortheme }, // Update the document with the new values
+            { id, Landing, Other, colortheme, Carousel }, // Update the document with the new values
             { new: true, upsert: true } // Create if not found
         );
         res.send(updated);

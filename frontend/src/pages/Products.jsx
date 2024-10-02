@@ -1,15 +1,19 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import Navbar from '../components/Navbar';
 import ProductTile from '../components/Product-Tile';
 import axios from 'axios';
 import AddItemForm from '../components/AddItemForm';
 import { PropContext } from '../components/PropContext';
 import Spinner from '../components/Spinner';
+import { ThemeContext } from '../context/ThemeContext';
+
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 const Products = () => {
+
+  const { theme } = useContext(ThemeContext); // Use context to access theme
 
   const list = ["Home", "Products", "Services", "Contact Us"];
   const [loading, setLoading] = useState(true); // State to handle the loading status
@@ -100,9 +104,13 @@ const Products = () => {
   }
 
   return (
-    <div>
+    <div className='pb-[50px]' style={{backgroundColor: theme.body,  color: theme.primaryText}}>
       <Navbar pages={list} />
-      <h1 className='font-inter font-extrabold text-4xl ml-[60px] my-[30px]'>Products</h1>
+      <h1 className='font-inter font-extrabold text-4xl ml-[60px] my-[30px]'
+          style={{ color: theme.mainHead }}
+      >
+        Products
+      </h1>
       {productList.map((item, index) => (
         <div key={index}>
           <h1 className='font-inter font-extrabold text-3xl ml-[60px] my-[30px]'>{item}</h1>
@@ -120,7 +128,6 @@ const Products = () => {
           </PropContext.Provider>
         </div>
       ))}
-      <div className='w-[100%] my-[30px]'></div>
     </div>
   );
 };

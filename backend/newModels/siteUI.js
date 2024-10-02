@@ -16,6 +16,11 @@ const siteview = mongoose.Schema(
             fontSize: String,
             fontColor: String,
         },
+        Carousel: [{
+            imageURL: String,
+            h5: String,  // Main text under post 
+        //    p: String    // Sub text under post
+        }]
     }
 );
 
