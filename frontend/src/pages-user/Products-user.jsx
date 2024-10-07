@@ -8,6 +8,7 @@ import ProductTile_user_no_buy from '../components-user/Product-Tile-user-no-buy
 import Spinner from '../components/Spinner';
 import { ThemeContext } from '../context/ThemeContext';
 
+
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 

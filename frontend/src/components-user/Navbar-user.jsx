@@ -2,6 +2,9 @@ import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios';
 
+import { HiOutlineShoppingCart } from "react-icons/hi";
+
+
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const frontend = import.meta.env.VITE_FRONTEND_URL;
 
@@ -50,7 +53,7 @@ const Navbar_User = ({pages}) => {//need to pass the hyperlink (address to page)
   return (
     <div>
         <div
-          className='flex justify-center grid content-center w-[100%] h-[125px]'
+          className='flex grid content-center w-[100%] h-[125px]'
           style={isImage ? 
             { 
               backgroundImage: `url(${bg})`, 
@@ -62,6 +65,15 @@ const Navbar_User = ({pages}) => {//need to pass the hyperlink (address to page)
             }
           }
         >
+
+        {/* Navigation Container */}
+        <div className='flex flex-row w-[100%] justify-between'>
+        
+
+        <div className='w-[88px]'>
+            {/* Logo */}
+        </div>
+
         <div
           className='px-8 border rounded-lg flex flex-row justify-center items-center w-[auto] h-[44px] space-x-16'
           style={{ 
@@ -74,7 +86,7 @@ const Navbar_User = ({pages}) => {//need to pass the hyperlink (address to page)
           }}
         >
                 
-              
+                {/* Navigation Links */}
                 <p><a href={`${frontend}`}>Home</a></p>
                 <p><a href={`${frontend}/user/products`}>Products</a></p>
                 <p><a href={`${frontend}/user/services`}>Services</a></p>
@@ -82,6 +94,23 @@ const Navbar_User = ({pages}) => {//need to pass the hyperlink (address to page)
               
                 
             </div>
+
+            {/* Cart Icon Container */}
+            <div className='flex items-center pr-10' style={{ color: fontColor }}>
+              <div
+                className='flex justify-center items-center w-12 h-12 rounded-full backdrop-filter backdrop-blur-md bg-white/30 shadow-lg'
+                style={{ color: fontColor }}
+              >
+                <HiOutlineShoppingCart
+                  className='cursor-pointer text-3xl hover:text-gray-600 transition duration-300 ease-in-out'
+                />
+                <span className='absolute top-2/3 right-1/2 bg-red-500 text-white text-sm
+                w-5 h-5 rounded-full flex justify-center items-center'>0</span>
+              </div>
+            </div>
+
+            </div>
+
         </div>
 
     </div>
