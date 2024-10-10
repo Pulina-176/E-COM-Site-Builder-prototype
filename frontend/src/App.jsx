@@ -16,6 +16,7 @@ import PrivateRoutes from './components/PrivateRoutes';
 import Products_user from './pages-user/Products-user';
 import Services_user from './pages-user/Services-user';
 import Landing_Page_User from './pages-user/Landing-user';
+import Cart from './pages-user/Cart';
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
 
         <Route path='/user/products' element={<Products_user/>} />
         <Route path='/user/services' element={<Services_user/>} />
+        <Route path='/cart' element={<Cart/>} />
         <Route path='/' element={<Landing_Page_User/>} />
 
         <Route path='/test' element={<PrivateRoutes/>} /> 

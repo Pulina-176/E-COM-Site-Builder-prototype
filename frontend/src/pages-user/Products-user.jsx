@@ -94,6 +94,7 @@ const Products_user = () => {
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false); // Set loading to false after fetching is done
+      console.log("list: ",pIDList[0])
     }
   }, []);
 
@@ -124,8 +125,8 @@ const Products_user = () => {
               {productData[pIDList[index]]?.map((value, i) => (
                 <div key={i} className='mx-[20px] mb-[30px]'>
                   {features[index][1]==0? //check for buy option in feature string
-                  <ProductTile_user_no_buy tileprops={tileProps[index]} features={features[index]} productData={value} index={index}/>: 
-                  <ProductTile_user tileprops={tileProps[index]} features={features[index]} productData={value} index={index}/>}
+                  <ProductTile_user_no_buy tileprops={tileProps[index]} features={features[index]} productData={value} index={index} />: 
+                  <ProductTile_user tileprops={tileProps[index]} features={features[index]} productData={value} index={index} PID={pIDList[index]}/>}
                 </div>
               ))}
             </div>

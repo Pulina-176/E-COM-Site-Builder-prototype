@@ -27,11 +27,15 @@ const cartSlice = createSlice({
             else{
                 state.items.pop(indexProductId)
             }
-        }
-
+        },
+        // New action to remove an item completely
+        removeItem(state, action) {
+            const { productId } = action.payload;
+            state.items = state.items.filter((item) => item.productId !== productId);
+        },
     }
 })
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, removeItem } = cartSlice.actions;
 export default cartSlice.reducer;
 

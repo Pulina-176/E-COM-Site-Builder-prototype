@@ -12,6 +12,7 @@
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.6",
     "@headlessui/react": "^2.1.2",
+    "@paypal/react-paypal-js": "^8.7.0",
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.6.7",
     "canvas": "^2.11.2",

@@ -11,7 +11,7 @@ import DescriptionP from './DescriptionP'
 import { useSelector , useDispatch } from 'react-redux';
 import { addToCart, removeFromCart } from '../stores/cart';
 
-const ProductTile_user = ({tileprops, productData, features, index}) => { //tileprops: properties to display in the tile, productData: data of the product, features: features of the product card type, index: index of the product in the product list
+const ProductTile_user = ({tileprops, productData, features, index, PID}) => { //tileprops: properties to display in the tile, productData: data of the product, features: features of the product card type, index: index of the product in the product list
 
     const carts = useSelector(store => store.cart);
     const dispatch = useDispatch();
@@ -28,9 +28,11 @@ const ProductTile_user = ({tileprops, productData, features, index}) => { //tile
     const isPrice = features[0] //check if the price is enabled to be displayed
     const Price = productData["price"]
 
+    const productId = PID+"$"+pk
+
     const handleAddToCart = () => {
         dispatch(addToCart({
-            productId: pk,
+            productId: productId,
             quantity: 1,
             title: productData.props[tileprops[0]],
             price: Price,
@@ -41,7 +43,7 @@ const ProductTile_user = ({tileprops, productData, features, index}) => { //tile
 
     const handleRemoveFromCart = () => {
         dispatch(removeFromCart({
-            productId: pk,
+            productId: productId,
             quantity: 1,
         }))
     }
@@ -89,3 +91,6 @@ const ProductTile_user = ({tileprops, productData, features, index}) => { //tile
 }
 
 export default ProductTile_user
+
+
+//Basic Product-Tile for user view v2.0

@@ -50,7 +50,9 @@ const Navbar = ({pages}) => {//need to pass the hyperlink (address to page) as w
   return (
     <div>
         <div
-          className='flex justify-center grid content-center w-[100%] h-[125px]'
+          className='flex flex-col justify-center items-center px-4 py-4 md:py-0 
+                      w-full h-auto  
+                      md:flex-row md:content-center md:h-[125px] md:px-10'
           style={isImage ? 
             { 
               backgroundImage: `url(${bg})`, 
@@ -63,7 +65,8 @@ const Navbar = ({pages}) => {//need to pass the hyperlink (address to page) as w
           }
         >
         <div
-          className='px-8 border rounded-lg flex flex-row justify-center items-center w-[auto] h-[44px] space-x-16'
+          className='flex-col items-center gap-4 py-4 px-4 md:gap-0 md:py-0 rounded-lg px
+                          md:px-8 md:border md:rounded-lg flex md:flex-row md:justify-center md:items-center md:w-[auto] md:h-[44px] md:space-x-16'
           style={{ 
             fontFamily: fontStyle, 
             fontSize: fontSize, 

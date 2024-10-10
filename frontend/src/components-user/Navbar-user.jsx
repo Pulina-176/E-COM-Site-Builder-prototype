@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { useSelector } from 'react-redux';  
 import PropTypes from 'prop-types'
 import axios from 'axios';
 
@@ -10,6 +11,9 @@ const frontend = import.meta.env.VITE_FRONTEND_URL;
 
 const Navbar_User = ({pages}) => {//need to pass the hyperlink (address to page) as well in props
                                         //isLanding is a boolean prop to check if landing or not.
+
+   // Use useSelector to get the length of the items array in the cart
+   const totalItems = useSelector((state) => state.cart.items.length);
 
    const [bg, setBg] = useState('#111111'); //state to store the background color or image URL of the navbar
    const [isImage, setIsImage] = useState(false); //state to determine if bg is color or image
@@ -53,7 +57,9 @@ const Navbar_User = ({pages}) => {//need to pass the hyperlink (address to page)
   return (
     <div>
         <div
-          className='flex grid content-center w-[100%] h-[125px]'
+          className='flex flex-col justify-center px-4 
+                      w-full h-auto  
+                      md:flex-row md:content-center md:h-[125px] md:px-10'
           style={isImage ? 
             { 
               backgroundImage: `url(${bg})`, 
@@ -67,36 +73,40 @@ const Navbar_User = ({pages}) => {//need to pass the hyperlink (address to page)
         >
 
         {/* Navigation Container */}
-        <div className='flex flex-row w-[100%] justify-between'>
+        <div className='flex 
+                        flex-col items-center py-4 gap-4
+                        md:flex-row md:w-[100%] md:justify-between md:items-center'>
         
 
-        <div className='w-[88px]'>
-            {/* Logo */}
-        </div>
+            <div className='md:w-[88px]'>
+                {/* Logo */}
+            </div>
 
-        <div
-          className='px-8 border rounded-lg flex flex-row justify-center items-center w-[auto] h-[44px] space-x-16'
-          style={{ 
-            fontFamily: fontStyle, 
-            fontSize: fontSize, 
-            color: fontColor, 
-            borderColor: fontColor,
-            borderWidth: '2px', // Increase border thickness
-            backdropFilter: 'blur(4px)', // Add blur effect 
-          }}
-        >
+            <div
+              className=' flex-col items-center gap-4 py-4 px-4 md:gap-0 md:py-0 rounded-lg px
+                          md:px-8 md:border md:rounded-lg flex md:flex-row md:justify-center md:items-center md:w-[auto] md:h-[44px] md:space-x-16'
+              style={{ 
+                fontFamily: fontStyle, 
+                fontSize: fontSize, 
+                color: fontColor, 
+                borderColor: fontColor,
+                borderWidth: '2px', // Increase border thickness
+                backdropFilter: 'blur(4px)', // Add blur effect 
+              }}
+            >
+                  
+                  {/* Navigation Links */}
+                  <p><a href={`${frontend}`}>Home</a></p>
+                  <p><a href={`${frontend}/user/products`}>Products</a></p>
+                  <p><a href={`${frontend}/user/services`}>Services</a></p>
+                  <p><a href={"#"}>About Us</a></p>
                 
-                {/* Navigation Links */}
-                <p><a href={`${frontend}`}>Home</a></p>
-                <p><a href={`${frontend}/user/products`}>Products</a></p>
-                <p><a href={`${frontend}/user/services`}>Services</a></p>
-                <p><a href={"#"}>About Us</a></p>
-              
                 
             </div>
 
             {/* Cart Icon Container */}
-            <div className='flex items-center pr-10' style={{ color: fontColor }}>
+            <div className='flex items-center md:pr-10 p-0' style={{ color: fontColor }}>
+              <a href={`${frontend}/cart`}>
               <div
                 className='flex justify-center items-center w-12 h-12 rounded-full backdrop-filter backdrop-blur-md bg-white/30 shadow-lg'
                 style={{ color: fontColor }}
@@ -105,8 +115,9 @@ const Navbar_User = ({pages}) => {//need to pass the hyperlink (address to page)
                   className='cursor-pointer text-3xl hover:text-gray-600 transition duration-300 ease-in-out'
                 />
                 <span className='absolute top-2/3 right-1/2 bg-red-500 text-white text-sm
-                w-5 h-5 rounded-full flex justify-center items-center'>0</span>
+                w-5 h-5 rounded-full flex justify-center items-center'>{totalItems}</span>
               </div>
+              </a>
             </div>
 
             </div>
