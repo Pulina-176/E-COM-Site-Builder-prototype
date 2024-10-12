@@ -108,6 +108,11 @@ const AddItemForm_Services = ({propertyFields, sID, features}) => {
 
         formData['ServiceID'] = sID; //Track the Product ID number accurately
 
+        if (isPrice === 1) {
+            const price = document.getElementById("price")
+            formData['price'] = price ? price.value : null //Insert the price if available
+        }
+
         if(imageURL!="null"){
             formData['images'] = [imageURL] //Insert the image URL
         }

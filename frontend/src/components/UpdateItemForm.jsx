@@ -59,6 +59,8 @@ const UpdateItemForm = ({propertyFields, ID, pK, comType, features}) => {
                     const fs = featurePacket.data;
                     console.log(fs[0].Feature_string[4]);
                     setMiniDes(fs[0].Feature_string[4]);
+
+                    console.log("isPrice : ",features)
                   }
         
                 } catch (error) {

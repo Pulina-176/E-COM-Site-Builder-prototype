@@ -53,7 +53,7 @@ router.get('/:id', async(req, res)=>{  //get data filtered by service id
         console.log(result)
         res.json(result)
     }
-    catch{
+    catch (error){
         res.status(500).send('Error retrieving data from database', error)
     }
 })

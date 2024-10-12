@@ -82,6 +82,11 @@ const AddItemForm = ({propertyFields, pID, features}) => {
 
         formData['images'] = [imageURL] //Insert the image URL
 
+        if (isPrice === 1) {
+            const price = document.getElementById("price")
+            formData['price'] = price ? price.value : null //Insert the price if available
+        }
+
         axios.post(`${backendUrl}/products`, formData, {withCredentials: true})
              .then(() => {
                 alert("Added New Item")
