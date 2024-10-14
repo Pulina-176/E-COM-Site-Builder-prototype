@@ -7,10 +7,14 @@ import DropDown3 from '../components/DropDown3';
 import { BsPlusCircle } from "react-icons/bs";
 import { BsXCircle } from "react-icons/bs";
 import RichTextEditor from '../components/RichTextEditor';
+import SavingSpinner from '../components/SavingSpinner';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const AddCommodity = () => {
+
+  const [isSaving, setIsSaving] = useState(false); // State to handle saving ongoing state
+
 
   const list = ["Home", "Products", "Services", "Contact Us"]
 
@@ -29,8 +33,9 @@ const AddCommodity = () => {
   function saveCustomObj() {   // Saving of overall Custom Object (Product or Service)
     const PK = document.getElementById("PK").value;
 
+    setIsSaving(true);
+
     const GName = document.getElementById("grp-name").value.trim();
-    console.log(GName)
     //check if all mandatory data is completed by user.
     let valid;
     (["Product","Service"].includes(com_Type) && GName!="") ? valid=1 : valid=0
@@ -77,11 +82,23 @@ const AddCommodity = () => {
         break
     }
 
-    console.log(postURL)
-
     axios.post(postURL, customObj)
-         .then(() => {console.log("successfully added a new type of Commodity"); alert(`Create New ${com_Type} Commodity, Success!`)})
-         .catch((error) => {console.log(error); alert(`Error: ${error}`)})
+    .then(() => {
+      console.log("successfully added a new type of Commodity");
+      alert(`Create New ${com_Type} Commodity, Success!`);
+      // Clear localStorage
+      localStorage.removeItem("options");
+      // Reload the page
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.log(error);
+      alert(`Error: ${error}`);
+    })
+    .finally(() => {
+      // Hide loading spinner
+      setIsSaving(false);
+    });
 
   }
 
@@ -202,6 +219,11 @@ const AddCommodity = () => {
   useEffect(()=>{
     document.getElementById("main-cat").value = com_Type
   }, com_Type)
+
+  // Render a saving message if data is still being saved
+  if (isSaving) {
+    return <div><SavingSpinner /></div>;
+  }
 
   return (<>
     <div class="container">

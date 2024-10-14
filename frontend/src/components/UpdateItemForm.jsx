@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { AiFillCloseSquare } from "react-icons/ai";
 import RichTextEditor from './RichTextEditor';
+import SavingSpinner from './SavingSpinner';
 
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { app } from '../firebase';
@@ -9,6 +10,8 @@ import { app } from '../firebase';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const UpdateItemForm = ({propertyFields, ID, pK, comType, features}) => {
+
+    const [isSaving, setSaving] = useState(false)  // state to handle during saving of the item
 
     const [isMiniDes, setMiniDes] = useState(false); //Rich Text Editor visible/not-visible - Depends on the 5th number in the feature string
     //This is a feature only for service type commodities
@@ -107,9 +110,9 @@ const UpdateItemForm = ({propertyFields, ID, pK, comType, features}) => {
         setDescription(text)
     }
 
-    const updateFunction = async () => {
 
-        const imageURL = await handleFileUpload(image);
+
+    const updateFunction = async () => {
 
         const formData = {};   //create a FormData object
 
@@ -119,26 +122,44 @@ const UpdateItemForm = ({propertyFields, ID, pK, comType, features}) => {
         })
         formData['props'] = JSON.stringify(tileData) //Insert the field inputs
 
-        formData['images'] = [imageURL] //Insert the image URL
-
         if (isPrice === 1) {
             const price = document.getElementById("price")
             formData['price'] = price ? price.value : null //Insert the price if available
         }
+
+        setSaving(true); // Start spinner
+        
+        const imageURL = await handleFileUpload(image);
+        formData['images'] = [imageURL] //Insert the image URL
         
         if(comType === "Service"){
             formData['Mini_Description'] = description
         }
 
-        axios.patch(getANDpatchURL, formData, {withCredentials: true})   
+        try{
+            axios.patch(getANDpatchURL, formData, {withCredentials: true})   
              .then(() => {
                     alert("Updated item")
                     location.reload()
                 })
              .catch((error) => {console.log(error); alert(`Error: ${error}`)})      
+        }
+        catch {
+            console.log(error);
+            alert(`Error: ${error}`);
+        }
+        finally {
+            setSaving(false); // Stop spinner when operation is complete
+
+        }
+        
           
     }
 
+    // Render a saving message if data is still being saved
+    if (isSaving) {
+        return <div><SavingSpinner /></div>;
+    }
 
     return (
         <>

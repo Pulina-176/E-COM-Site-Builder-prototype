@@ -8,11 +8,15 @@ import { BsPlusCircle } from "react-icons/bs";
 import { BsXCircle } from "react-icons/bs";
 import { useParams } from 'react-router-dom';
 import Spinner from '../components/Spinner';
+import SavingSpinner from '../components/SavingSpinner';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 const UpdateCommodity = () => {
+
+  const [isSaving, setIsSaving] = useState(false); // State to handle saving ongoing state
+
 
   const [loading, setLoading] = useState(true); // State to handle the loading status
   const [pageError, setError] = useState(false) // this handles if mismatching "Type" parameter is passed to the route of Router UpdateCommmodity
@@ -91,8 +95,9 @@ const UpdateCommodity = () => {
   function saveCustomObj() {
     const PK = document.getElementById("PK").value;
 
+    setIsSaving(true);
+
     const GName = document.getElementById("grp-name").value.trim();
-    console.log(GName)
     //check if all mandatory data is completed by user.
     let valid;
     (["Product","Service"].includes(com_Type) && GName!="") ? valid=1 : valid=0
@@ -140,8 +145,22 @@ const UpdateCommodity = () => {
     }
 
     axios.patch(`${patchURL}/${ID}`, customObj)
-         .then(() => {console.log("successfully added a new type of Commodity"); alert(`Create New ${com_Type} Commodity, Success!`)})
-         .catch((error) => {console.log(error); alert(`Error: ${error}`)})
+         .then(() => {
+            console.log("successfully updated a new type of Commodity"); 
+            alert(`Updated ${com_Type} Commodity, Successfully!`)
+            // Clear localStorage
+            localStorage.removeItem("options");
+            // Reload the page
+            window.location.reload();
+          })
+         .catch((error) => {
+            console.log(error); 
+            alert(`Error: ${error}`)
+          })
+         .finally(() => {
+            // Hide loading spinner
+            setIsSaving(false);
+         })
 
   }
 
@@ -292,20 +311,25 @@ const UpdateCommodity = () => {
   }
 
 
-    // Render loading if data is still being fetched
-    if (loading) {
-        return <div><Spinner></Spinner></div>;
-        }
+  // Render loading if data is still being fetched
+  if (loading) {
+      return <div><Spinner></Spinner></div>;
+      }
 
-    // Render loading if data is still being processed
-    if (dataprocessing) {
-        return <div><Spinner></Spinner></div>;
-        }
+  // Render loading if data is still being processed
+  if (dataprocessing) {
+      return <div><Spinner></Spinner></div>;
+      }
 
   if(pageError) { //Not correct route (/Products or /Services)
     return(<div>
         Wrong parameters. Try again
     </div>)
+  }
+
+  // Render a saving message if data is still being saved
+  if (isSaving) {
+    return <div><SavingSpinner /></div>;
   }
 
   return (<>

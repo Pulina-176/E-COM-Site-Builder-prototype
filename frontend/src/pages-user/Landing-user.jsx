@@ -4,12 +4,15 @@ import axios from 'axios';
 
 import Carousel from '../components-user/Carousel';
 import Spinner from '../components/Spinner';
+import Footer from '../components-user/Footer';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const Landing_Page_User = () => {
 
-  const [images, setImages] = useState([]);
+  const pageBgColor = '#EEEEEE' 
+
+  const [images, setImages] = useState([]);  // images passed down to Carousel component
 
   const [loading, setLoading] = useState(true); // State to handle the loading status
 
@@ -36,6 +39,7 @@ const Landing_Page_User = () => {
   const [isImage, setIsImage] = useState(false); //state to determine if bg is color or image
 
   const [businessTitle, setbusinessTitle] = useState('<p> Welcome to our site! </p>');
+  const [businessDescription, setbusinessDescription] = useState('<p>Hello There</p>')
 
   useEffect(() => {
     const fetchStyle = async () => {
@@ -59,7 +63,9 @@ const Landing_Page_User = () => {
           setbusinessTitle(data.Landing.businessTitle);
         }
 
-        console.log(businessTitle)
+        if(data.Landing.businessDescription !== null){
+          setbusinessDescription(data.Landing.businessDescription)
+        }
 
       } catch (error) {
         console.error('Error fetching styles:', error);
@@ -95,40 +101,83 @@ const Landing_Page_User = () => {
     };
   }, []);
 
+
+  // For the "Get Started" Button
+  const [buttonStyle, setButtonStyle] = useState({
+    bgColor: '#000000',
+    textColor: '#ffffff',
+    hoverBgColor: '#333333'
+  }); // Button style
+
+
+
   // Render a loading message if data is still being fetched
   if (loading) {
     return <div><Spinner /></div>;;
   }
 
   return (
-    <>
-    <div className="relative w-full h-[500px] flex justify-center items-center">
+    <div style={{backgroundColor: pageBgColor}}>
+    <div className="relative w-full h-[500px] flex justify-center items-center"
+         >
         <div
           className='absolute inset-0'
           style={isImage ? 
             { 
               backgroundImage: `url(${bg})`, 
               backgroundSize: 'cover', 
-              backgroundPosition: 'center' 
+              backgroundPosition: 'center', 
+              borderBottomLeftRadius: '80px',  // Add this
+              borderBottomRightRadius: '80px', // Add this
             } : 
             { 
-              backgroundColor: bg 
+              backgroundColor: bg, 
+              borderBottomLeftRadius: '80px',  // Add this
+              borderBottomRightRadius: '80px', // Add this
             }
           }
         >
       </div>
+
       <div className='flex flex-col'>
         <div className="relative z-10 text-center" dangerouslySetInnerHTML={{ __html: businessTitle }} />
-        <button className="relative z-11 self-center btn btn-wide bg-black text-white border-none mt-[20px]" onClick={()=>navigate('/user/products')}>Get Started</button>
+        <button className="relative z-11 self-center btn btn-wide bg-black text-white border-none mt-[40px]" 
+                style={{
+                  backgroundColor: buttonStyle.bgColor,
+                  color: buttonStyle.textColor,
+                  hover: { backgroundColor: buttonStyle.hoverBgColor },
+                }}
+                onClick={()=>navigate('/user/products')}>Get Started
+            </button>
       </div>
 
     </div>
 
+    {/* Business Description Section */}
+    <div className="flex flex-col mt-[40px]">
+      <div className="relative z-10 text-center" dangerouslySetInnerHTML={{ __html: businessDescription }} />
+    </div>
+
+
+    {/* Carousel Section */}
     <div className='my-[100px]'>  
       <Carousel images={images}></Carousel>
     </div>
+
+    {/* Footer Section */}
+    <Footer 
+      socialLinks={{
+        facebook: 'https://facebook.com/yourpage',
+        instagram: 'https://instagram.com/yourpage',
+        twitter: 'https://twitter.com/yourpage',
+      }}
+      contactDetails={{
+        email: 'info@yourcompany.com',
+        phone: '+123 456 7890',
+      }}
+    />
     
-    </>
+    </div>
   )
 }
 

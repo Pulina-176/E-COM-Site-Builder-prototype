@@ -8,6 +8,7 @@ const siteview = mongoose.Schema(
             imageURL: String,
             color: String,
             businessTitle: String,
+            businessDescription: String
         }, 
         Other: {
             imageURL: String,
