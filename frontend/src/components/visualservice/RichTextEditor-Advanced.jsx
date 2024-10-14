@@ -64,7 +64,7 @@ const RichTextEditor_advanced = ({ initialValue, onType }) => {
                 onChange={setDescription} 
                 modules={modules}
                 formats={formats}
-                style={{ fontFamily: fontNames[description] }} // Applies the font family to the editor
+                style={{ fontFamily: fontNames }} // Applies the font family to the editor
             />
         </div>
     );

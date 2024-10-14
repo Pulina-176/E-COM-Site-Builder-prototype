@@ -122,8 +122,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import { IoCloseCircle } from "react-icons/io5";
 import { addToCart, removeItem } from '../stores/cart';
 
-const DescriptionP = ({ product, props }) => {
-  const [open, setOpen] = useState(false);
+const DescriptionP = ({ product, props, openORclose, setOpenState }) => {
 
   // Redux hooks to dispatch actions and access cart state
   const dispatch = useDispatch();
@@ -149,11 +148,11 @@ const DescriptionP = ({ product, props }) => {
 
   return (
     <>
-      <button className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition ease-in-out duration-300" onClick={() => setOpen(true)}>
+      {/* <button className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition ease-in-out duration-300" onClick={() => setOpen(true)}>
         View More
-      </button>
+      </button> */}
 
-      <Dialog open={open} onClose={() => setOpen(false)} className="relative z-10">
+      <Dialog open={openORclose} onClose={() => setOpenState(false)} className="relative z-10">
         <DialogBackdrop
           transition
           className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
@@ -167,7 +166,7 @@ const DescriptionP = ({ product, props }) => {
             >
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={() => setOpenState(false)}
                 className="absolute right-4 top-4 text-gray-500 hover:text-gray-700 transition duration-300"
               >
                 <span className="sr-only">Close</span>

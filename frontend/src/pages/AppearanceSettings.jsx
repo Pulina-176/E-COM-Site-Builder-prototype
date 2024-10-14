@@ -52,7 +52,7 @@ const AppearanceSettings = () => {
             <div className='flex flex-row'>
                 <div className='w-[40%] my-[40px] h-[auto] bg-[#F0F3FF] ml-[60px] rounded-[10px] flex flex-col'>
                     <p className='font-inter text-xl font-semibold mx-[40px] mt-[20px]'>Site Outlook</p>
-                    <div className='flex flex-col mb-[10px]'>
+                    {/* <div className='flex flex-col mb-[10px]'>
                         <p className='font-inter text-lg mx-[40px] mt-[20px]'>Block styles</p>
                         <hr className='mx-[40px] border-t-1 border-black mb-[20px]'></hr>
                         <div className='flex flex-row'>
@@ -63,7 +63,7 @@ const AppearanceSettings = () => {
                             <p className='mx-[50px]'>Material</p>
                             <DropDown3 values={["Solid", "Glass"]} setComType={(str) => console.log(str)}></DropDown3>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className='flex flex-col mb-[10px]'>
                         <p className='font-inter text-lg mx-[40px] mt-[20px]'>Header and Nav Bar</p>

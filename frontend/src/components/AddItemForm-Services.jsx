@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { AiFillCloseSquare } from "react-icons/ai";
 import axios from 'axios';
 import RichTextEditor from './RichTextEditor';
+import SavingSpinner from './SavingSpinner';
 
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { app } from '../firebase';
@@ -9,6 +10,8 @@ import { app } from '../firebase';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const AddItemForm_Services = ({propertyFields, sID, features}) => {
+
+    const [isSaving, setSaving] = useState(false)  // state to handle during saving of the item
 
     async function getFeatureString(ID) { //get Feature String
         const packet = await axios.get(`${backendUrl}/custom-s-com/${ID}`) 
@@ -98,31 +101,56 @@ const AddItemForm_Services = ({propertyFields, sID, features}) => {
 
         const formData = {}   //create a FormData object
 
+        if (isPrice === 1) {
+            const price = document.getElementById("price")
+            formData['price'] = price ? price.value : null //Insert the price if available
+        }
+
         const tileData = {}
         propertyFields.map((prop) => {
             tileData[prop] = document.getElementById(prop).value
         })
+
+        setSaving(true); // Start spinner
+
         formData['props'] = JSON.stringify(tileData) //Insert the field inputs
 
         formData['PK_n'] = JSON.stringify(nextPK)    //The primary key number value. calculated using the nexPK prop which was drilled using function getLastPK ()
 
         formData['ServiceID'] = sID; //Track the Product ID number accurately
+        
+        try{
 
-        if(imageURL!="null"){
-            formData['images'] = [imageURL] //Insert the image URL
+            if(imageURL!="null"){
+                formData['images'] = [imageURL] //Insert the image URL
+            }
+    
+            if(isMiniDes){
+                formData['Mini_Description'] = description
+            }
+    
+            axios.post(`${backendUrl}/services`, formData, {withCredentials: true})
+                 .then(() => {
+                    alert("Added New Item")
+                    location.reload()
+                 }) 
+                 .catch((error) => {console.log(error); alert(`Error: ${error}`)})
+
         }
-
-        if(isMiniDes){
-            formData['Mini_Description'] = description
+        catch (error){
+            console.log(error);
+            alert(`Error: ${error}`);
         }
-
-        axios.post(`${backendUrl}/services`, formData, {withCredentials: true})
-             .then(() => {
-                alert("Added New Item")
-                location.reload()
-             }) 
-             .catch((error) => {console.log(error); alert(`Error: ${error}`)})
+        finally {
+            setSaving(false); // Stop spinner when operation is complete
+        }
+        
     } 
+
+    // Render a saving message if data is still being saved
+    if (isSaving) {
+        return <div><SavingSpinner /></div>;
+    }
 
     return (
     <>

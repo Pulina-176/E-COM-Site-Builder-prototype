@@ -123,8 +123,8 @@ const Services_user = () => { //Services page in user's POV
                 {serviceData[sIDList[index]]?.map((value, i) => (
                     <div key={i} className='mx-[20px]'>
                       {features[index][1]==0? //check for buy option in feature string
-                      <ServiceCard_user_no_buy tileprops={tileProps[index]} serviceData={value} index={index}/>: 
-                      <ServiceCard_user tileprops={tileProps[index]} serviceData={value} index={index}/>}  
+                      <ServiceCard_user_no_buy tileprops={tileProps[index]} features={features[index]} serviceData={value} index={index}/>: 
+                      <ServiceCard_user tileprops={tileProps[index]} features={features[index]} serviceData={value} index={index}/>}  
                     </div>
                 ))}
                 </div>

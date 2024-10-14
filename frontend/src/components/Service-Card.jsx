@@ -13,6 +13,9 @@ const ServiceCard = ({tileprops, serviceData, index, features}) => {
 
   const img_paths = serviceData["images"] //array of image paths
 
+  const isPrice = features[0] //check if the price is enabled to be displayed
+  const Price = serviceData["price"]
+
   const Delete = () => {
     const PID= serviceData["ServiceID"]
     axios.delete(`${backendUrl}/services/${PID}/${pk}`, {withCredentials: true})  
@@ -36,6 +39,13 @@ const ServiceCard = ({tileprops, serviceData, index, features}) => {
             {serviceData.props[value]}
         </div>
         ))}
+
+        {isPrice === 1 &&
+        <div className='w-[400px] h-[auto] pt-[4px] px-[15px] bg-gray-100 text-[24px]'>LKR {Price}</div>
+        }
+        
+        <div className='w-[400px] h-[10px] bg-gray-100'></div>
+
         <div className='w-[400px] h-[auto] pt-[4px] pb-[10px] px-[8px] bg-gray-100 custom-html'> 
           <div dangerouslySetInnerHTML={{ __html: serviceData.Mini_Description }} />
           <style jsx>{`

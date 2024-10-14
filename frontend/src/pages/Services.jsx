@@ -123,7 +123,7 @@ const Services = () => {
                 <div className='ml-[60px] flex flex-row'>
                 {serviceData[sIDList[index]]?.map((value, i) => (
                     <div key={i} className='mx-[20px]'>
-                      <ServiceCard tileprops={tileProps[index]} serviceData={value} index={index} features={features}/>
+                      <ServiceCard tileprops={tileProps[index]} serviceData={value} index={index} features={features[index]}/>
                     </div>
                 ))}
                 </div>

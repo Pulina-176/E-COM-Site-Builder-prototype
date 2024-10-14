@@ -19,8 +19,9 @@ router.post('/', verifyToken, async(req, res) => {
     if (req.body.price) {
         newobj.price = req.body.price;
     }
-    newobj.Mini_Description = req.body.Mini_Description
-
+    if (req.body.Mini_Description){
+        newobj.Mini_Description = req.body.Mini_Description
+    }
     try {
         await newobj.save();
         res.send('Files uploaded and paths saved to database successfully');
@@ -44,8 +45,9 @@ router.patch('/:ID/:pk', verifyToken, async(req,res) => {          //Update prod
     if (req.body.price) {
         obj.price = req.body.price;
     }
-    obj.Mini_Description = req.body.Mini_Description
-
+    if (req.body.Mini_Description) {
+        obj.Mini_Description = req.body.Mini_Description
+    }
     try {
         await obj.save();
         res.send('Files uploaded and paths saved to database successfully');

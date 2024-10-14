@@ -48,12 +48,21 @@ const Landing_customize = () => { //boolean prop to check if landing or not.
         }
       }, [imageFile]);
 
+      
+      // For business Title
       const [description, setDescription] = useState("") //Rich Text Editor value (state to track current changes in editor)
 
       function getDescriptionText(text) {  //Rich Text Editor onType prop function
         setDescription(text)
-        console.log(description)
-    }
+      } 
+
+      // For business Description
+      const [description2, setDescription2] = useState("")
+
+      function getDescriptionText2(text) {  //Rich Text Editor onType prop function
+        setDescription2(text)
+      } 
+
 
     // Handle save font settings function
     const handleSaveSettings = async () => {
@@ -79,6 +88,7 @@ const Landing_customize = () => { //boolean prop to check if landing or not.
         }
 
         formData.Landing.businessTitle = description;
+        formData.Landing.businessDescription = description2;
       
         try {
           const response = await axios.patch(`${backendUrl}/display/`, formData)
@@ -101,7 +111,7 @@ const Landing_customize = () => { //boolean prop to check if landing or not.
   
         {isOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-[auto]]">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-[auto] max-h-[80vh] overflow-y-auto relative">
             <AiFillCloseCircle
               onClick={togglePopup}
               className="absolute top-2 right-2 text-2xl cursor-pointer"
@@ -141,13 +151,29 @@ const Landing_customize = () => { //boolean prop to check if landing or not.
               </div>
 
               <div className="flex flex-col p-4 border-r">
-                    <h3 className="mb-2">Business Title / Heading</h3>
+                    <h3 className="mb-2">
+                      
+                      Business Title / Heading
+                      
+                      </h3>
                     <RichTextEditor_advanced onType={getDescriptionText}/>
+                    {/* <button onClick={handleSaveSettings} className="btn bg-green-400 my-[20px] mx-[400px]">
+                        Save Changes
+                    </button> */}
+                </div>
+
+
+                <div className="flex flex-col p-4 border-r">
+                    <h3 className="mb-2">
+                      
+                      Business Description
+                      
+                      </h3>
+                    <RichTextEditor_advanced onType={getDescriptionText2}/>
                     <button onClick={handleSaveSettings} className="btn bg-green-400 my-[20px] mx-[400px]">
                         Save Changes
                     </button>
                 </div>
-
 
   
               <button

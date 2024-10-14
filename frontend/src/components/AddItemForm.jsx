@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { AiFillCloseSquare } from "react-icons/ai";
 import axios from 'axios';
+import SavingSpinner from './SavingSpinner';
 
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { app } from '../firebase';
@@ -8,6 +9,8 @@ import { app } from '../firebase';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const AddItemForm = ({propertyFields, pID, features}) => {
+
+    const [isSaving, setSaving] = useState(false)  // state to handle during saving of the item
 
     async function getLastPK(ID) {  //get the to be entered primary key of the item (respective to the ProductID)
         const packet = await axios.get(`${backendUrl}/products/nxt-pk/${ID}`, {withCredentials: true})
@@ -66,30 +69,49 @@ const AddItemForm = ({propertyFields, pID, features}) => {
 
     const Savefunction = async () => {
 
-        const imageURL = await handleFileUpload(image);
-
         const formData = {};   //create a FormData object
-
+    
         const tileData = {}
+
         propertyFields.map((prop) => {
             tileData[prop] = document.getElementById(prop).value
         })
-        formData['props'] = JSON.stringify(tileData) //Insert the field inputs
 
-        formData['PK_n'] = JSON.stringify(nextPK)    //The primary key number value. calculated using the nexPK prop which was drilled using function getLastPK ()
+        if (isPrice === 1) {
+            const price = document.getElementById("price")
+            formData['price'] = price ? price.value : null //Insert the price if available
+        }
 
-        formData['ProductID'] = pID; //Track the Product ID number accurately
+        setSaving(true); // Start spinner
+    
+        try {
+            const imageURL = await handleFileUpload(image);
 
-        formData['images'] = [imageURL] //Insert the image URL
-
-        axios.post(`${backendUrl}/products`, formData, {withCredentials: true})
-             .then(() => {
-                alert("Added New Item")
-                location.reload()
-             }) 
-             .catch((error) => {console.log(error); alert(`Error: ${error}`)})
+            formData['props'] = JSON.stringify(tileData) //Insert the field inputs
+    
+            formData['PK_n'] = JSON.stringify(nextPK)    //The primary key number value
+    
+            formData['ProductID'] = pID; //Track the Product ID number accurately
+    
+            formData['images'] = [imageURL] //Insert the image URL
+    
+            await axios.post(`${backendUrl}/products`, formData, {withCredentials: true});
+            alert("Added New Item");
+            location.reload();
+        } catch (error) {
+            console.log(error);
+            alert(`Error: ${error}`);
+        } finally {
+            setSaving(false); // Stop spinner when operation is complete
+        }
     }
 
+    // Render a saving message if data is still being saved
+    if (isSaving) {
+        return <div><SavingSpinner /></div>;
+    }
+
+    
     return (
     <>
     <div className='w-[200px] h-[300px] bg-gray-300 text-inherit
