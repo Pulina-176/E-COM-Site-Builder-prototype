@@ -4,7 +4,7 @@
 //--Image
 
 import React, { useContext , useState } from 'react'
-import { PropContext } from '../components/PropContext'
+import { PropContext } from '../context/PropContext'
 import DescriptionP from './DescriptionP'
 
 const ProductTile_user_no_buy = ({tileprops, productData, features, index}) => {

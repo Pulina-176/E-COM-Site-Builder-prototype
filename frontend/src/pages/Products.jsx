@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import ProductTile from '../components/Product-Tile';
 import axios from 'axios';
 import AddItemForm from '../components/AddItemForm';
-import { PropContext } from '../components/PropContext';
+import { PropContext } from '../context/PropContext';
 import Spinner from '../components/Spinner';
 import { ThemeContext } from '../context/ThemeContext';
 

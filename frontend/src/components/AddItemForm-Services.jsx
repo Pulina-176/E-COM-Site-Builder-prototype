@@ -23,7 +23,7 @@ const AddItemForm_Services = ({propertyFields, sID, features}) => {
 
 
     async function getLastPK(ID) {
-        const packet = await axios.get(`${backendUrl}/services/nxt-pk/${ID}`)
+        const packet = await axios.get(`${backendUrl}/services/nxt-pk/${ID}`, {withCredentials: true})
         const pk = packet.data
         return pk
     }
@@ -37,7 +37,6 @@ const AddItemForm_Services = ({propertyFields, sID, features}) => {
 
         const fetchisMiniDes = async () => {
             const fs = await getFeatureString(sID);
-            console.log(fs[0].Feature_string[4])
             if(fs[0].Feature_string[4]==1){
                 setMiniDes(true)
             }
@@ -51,14 +50,12 @@ const AddItemForm_Services = ({propertyFields, sID, features}) => {
 
     const toggleOpen = () => {  //Form visible/not-visible toggle function
         setIsOpen(!isOpen)
-        console.log(isMiniDes)
     }
 
     const [description, setDescription] = useState("") //Rich Text Editor value (temporary save)
 
     function getDescriptionText(text) {  //Rich Text Editor onType prop function
         setDescription(text)
-        console.log(description)
     }
 
     const [image, setImage] = useState(undefined) // Image file to be uploaded
@@ -95,10 +92,6 @@ const AddItemForm_Services = ({propertyFields, sID, features}) => {
 
         let imageURL = "null" //Default image URL
 
-        if (image!=undefined) {
-            imageURL = await handleFileUpload(image);
-        }
-
         const formData = {}   //create a FormData object
 
         if (isPrice === 1) {
@@ -120,6 +113,10 @@ const AddItemForm_Services = ({propertyFields, sID, features}) => {
         formData['ServiceID'] = sID; //Track the Product ID number accurately
         
         try{
+
+            if (image!=undefined) {
+                imageURL = await handleFileUpload(image);
+            }
 
             if(imageURL!="null"){
                 formData['images'] = [imageURL] //Insert the image URL

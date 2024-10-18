@@ -23,6 +23,7 @@ const ServiceCard_user = ({tileprops, serviceData, features, index}) => {
   const hasMiniDescription = features[5] // check if the minidescription section is enabled on the service card
 
   const isPrice = features[0] //check if the price is enabled to be displayed
+  const isBook = features[1]
   const Price = serviceData["price"]
 
   return (
@@ -84,7 +85,7 @@ const ServiceCard_user = ({tileprops, serviceData, features, index}) => {
         )} */}
 
         {/* Price & Book Section */}
-        {isPrice === 1 && (
+        {isPrice === 1 && isBook === 1 (
             <div className='w-[400px] h-[auto] flex items-center justify-center pt-[10px] pb-[10px] px-[15px] border border-gray-300 mt-4'>
                 <span className='text-2xl font-bold text-black tracking-wide mr-4'>
                     Rs {Price}
@@ -93,6 +94,15 @@ const ServiceCard_user = ({tileprops, serviceData, features, index}) => {
                     Book Now
                 </button>
             </div>
+        )}
+
+        {/* Book Service Button without a Price specified*/}
+        {isBook === 1 && (
+          <div className='w-[400px] h-[auto] flex items-center justify-center pt-[10px] pb-[10px] px-[15px] my-2'>
+              <button onClick={handleOpenModal} className="bg-green-400 text-black font-semibold px-6 py-2 text-sm rounded-lg border border-green-400 hover:bg-green-50 transition-all">
+                  Book Now
+              </button>
+          </div>
         )}
 
         {/* Contact Us Modal */}

@@ -1,8 +1,16 @@
 // component which allows visitors to send request for service/s
 
-import React, { useState } from 'react';
+import React, { useState , useContext } from 'react';
+import axios from 'axios';
+import { PropContext } from '../context/PropContext';
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const BookService = ({ isOpen, onClose, serviceData, onSubmit }) => {
+
+  const {allProps, pIDList} = useContext(PropContext)
+  const title_field = allProps[0] // Title field of the service category
+
   const [visitorInfo, setVisitorInfo] = useState({
     fullName: '',
     address: '',
@@ -16,9 +24,32 @@ const BookService = ({ isOpen, onClose, serviceData, onSubmit }) => {
     setVisitorInfo({ ...visitorInfo, [name]: value });
   };
 
-  const handleSubmit = () => {
-    // Pass visitor info and selected service to the parent handler
-    onSubmit(visitorInfo, serviceData);
+  const handleSubmit = async () => {
+
+    const formData = {};
+    formData['ServiceID'] = serviceData.ServiceID; // Main Service Category ID
+    formData['PK_n'] = serviceData.PK_n; // Add selected service primary key number
+    formData['title'] = serviceData['props'][title_field]; // Add selected service name
+
+    formData['fullName'] = visitorInfo.fullName;
+    formData['address'] = visitorInfo.address;
+    formData['email'] = visitorInfo.email;
+    formData['phone'] = visitorInfo.mobile;
+    formData['note'] = visitorInfo.note;
+    // Pass visitor info and selected service info to the parent handler
+
+    console.log(formData)
+    
+    try{
+      await axios.post(`${backendUrl}/book`, formData)
+      alert('Request sent successfully')
+    }
+    catch (error) {
+      console.log(error)
+      alert(`Error: ${error}`);
+    }
+    
+
     onClose(); // Close the modal after submitting
   };
 

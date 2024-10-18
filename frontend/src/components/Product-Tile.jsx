@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import axios from 'axios'
 import UpdateItemForm from './UpdateItemForm'
-import { PropContext } from './PropContext'
+import { PropContext } from '../context/PropContext'
 import CreateDescription from './CreateDescription';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;

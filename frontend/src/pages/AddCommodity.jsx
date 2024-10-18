@@ -174,12 +174,12 @@ const AddCommodity = () => {
           else if (id=='toggle-service-des') setToggleServiceDES(0)
       }
 
-      if (id=='toggle-prc' && isChecked==1) {
+      if (id=='toggle-prc' && isChecked==1 && com_Type=="Product") {
         const checkbox2 = document.getElementById(`toggle-pur`);
         checkbox2.disabled = false;
       }
 
-      if (id=='toggle-prc' && isChecked==0) {
+      if (id=='toggle-prc' && isChecked==0 && com_Type=="Product") { //Services has the freedom of having Book Field without a price field
         const checkbox2 = document.getElementById(`toggle-pur`);
         checkbox2.checked = false;
         checkbox2.disabled = true;
@@ -319,7 +319,7 @@ const AddCommodity = () => {
                       </div>
                       <div className='mx-[60px] flex flex-row items-center mb-4'>
                         <p>Buy/Book option</p>
-                        <input id={"toggle-pur"} type="checkbox" className="toggle toggle-warning mx-[10px]" onChange={handleToggle("toggle-pur")} disabled />
+                        <input id={"toggle-pur"} type="checkbox" className="toggle toggle-warning mx-[10px]" onChange={handleToggle("toggle-pur")}   disabled={com_Type === "Product"} />
                       </div>
                       <div className='mx-[60px] flex flex-row items-center mb-4'>
                         <p>Show fieldnames on tile</p>

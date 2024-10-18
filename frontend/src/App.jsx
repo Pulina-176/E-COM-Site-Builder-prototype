@@ -11,12 +11,14 @@ import UpdateCommodity from './pages/UpdateCommodity';
 import Products from './pages/Products';
 import Services from './pages/Services';
 import PrivateRoutes from './components/PrivateRoutes';
+import RequestsList from './pages/RequestsList';
 
 
 import Products_user from './pages-user/Products-user';
 import Services_user from './pages-user/Services-user';
 import Landing_Page_User from './pages-user/Landing-user';
 import Cart from './pages-user/Cart';
+
 
 const App = () => {
   return (
@@ -32,6 +34,7 @@ const App = () => {
         <Route path='/admin/upcom/:Type/:ID' element={<UpdateCommodity/>}/> 
         <Route path='/admin/products' element={<Products/>}/>
         <Route path='/admin/services' element={<Services/>}/>
+        <Route path='/admin/requests' element={<RequestsList/>}/>
       </Route>  
 
         <Route path='/user/products' element={<Products_user/>} />

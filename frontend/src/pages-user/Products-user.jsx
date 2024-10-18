@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useCallback, useContext } from 'react';
 import Navbar_User from '../components-user/Navbar-user';
 import axios from 'axios';
-import AddItemForm from '../components/AddItemForm';
-import { PropContext } from '../components/PropContext';
+import { PropContext } from '../context/PropContext';
 import ProductTile_user from '../components-user/Product-Tile-user';               // Product card with purchase button
 import ProductTile_user_no_buy from '../components-user/Product-Tile-user-no-buy'; // Product card with no purchase button
 import Spinner from '../components/Spinner';
