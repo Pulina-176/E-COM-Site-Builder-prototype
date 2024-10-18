@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import ServiceCard from '../components/Service-Card';
 import axios from 'axios';
 import Spinner from '../components/Spinner';
-import { PropContext } from '../components/PropContext';
+import { PropContext } from '../context/PropContext';
 import { ThemeContext } from '../context/ThemeContext';
 
 import AddItemForm_Services from '../components/AddItemForm-Services';

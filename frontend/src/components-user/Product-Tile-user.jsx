@@ -6,7 +6,7 @@
 //--Go To Description Page
 
 import React, { useState , useContext } from 'react'
-import { PropContext } from '../components/PropContext'
+import { PropContext } from '../context/PropContext'
 import DescriptionP from './DescriptionP'
 import { HiOutlineShoppingCart } from 'react-icons/hi';
 

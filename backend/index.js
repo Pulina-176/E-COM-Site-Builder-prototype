@@ -10,6 +10,7 @@ import prodRoutes from "./newRoutes/routes-Product-Items.js";
 import servRoutes from "./newRoutes/routes-Service-Items.js";
 import displayRoutes from "./newRoutes/routes-siteUI.js";
 import authRoutes from "./newRoutes/routes-admin-auth.js";
+import bookingRoutes from "./newRoutes/routes-bookingservice.js";
 
 import cors from 'cors';
 
@@ -47,6 +48,7 @@ app.use('/products', prodRoutes); //Routes of routes-Product-Objects.js
 app.use('/services', servRoutes); //Routes of routes-Service-Objects.js
 app.use('/display', displayRoutes); //Routes of routes-siteUI.js
 app.use('/admin-auth', authRoutes); //Routes of routes-admin-auth.js
+app.use('/book', bookingRoutes); //Routes of routes-bookingservice.js
 
 mongoose
     .connect(mongoDBURL)

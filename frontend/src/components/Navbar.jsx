@@ -5,8 +5,7 @@ import axios from 'axios';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const frontend = import.meta.env.VITE_FRONTEND_URL;
 
-const Navbar = ({pages}) => {//need to pass the hyperlink (address to page) as well in props
-                                        //isLanding is a boolean prop to check if landing or not.
+const Navbar = ({pages}) => {//need to pass the hyperlink (address to page) as well in props   **Not currently in use. Navigation options are hardcoded
 
    const [bg, setBg] = useState('#111111'); //state to store the background color or image URL of the navbar
    const [isImage, setIsImage] = useState(false); //state to determine if bg is color or image

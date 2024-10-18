@@ -104,6 +104,7 @@ const AddItemForm = ({propertyFields, pID, features}) => {
         } finally {
             setSaving(false); // Stop spinner when operation is complete
         }
+
     }
 
     // Render a saving message if data is still being saved

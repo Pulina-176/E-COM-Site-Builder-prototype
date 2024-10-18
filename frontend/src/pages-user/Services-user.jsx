@@ -1,13 +1,10 @@
 import React, { useEffect, useState, useCallback, useContext } from 'react'
 import Navbar_User from '../components-user/Navbar-user';
-import ServiceCard from '../components/Service-Card';
 import axios from 'axios';
 import Spinner from '../components/Spinner';
-import { PropContext } from '../components/PropContext';
+import { PropContext } from '../context/PropContext.jsx';
 import { ThemeContext } from '../context/ThemeContext';
 
-
-import AddItemForm_Services from '../components/AddItemForm-Services';
 import ServiceCard_user from '../components-user/Service-Card-user';
 import ServiceCard_user_no_buy from '../components-user/Service-Card-user-no-buy.jsx';
 
@@ -112,7 +109,7 @@ const Services_user = () => { //Services page in user's POV
       <h1 className='font-inter font-extrabold text-4xl ml-[60px] my-[30px]'
         style={{ color: theme.mainHead }}
       >
-        Services</h1>
+        Our Services</h1>
       
       {serviceList.map((item, index) => (
         <div key={index}>

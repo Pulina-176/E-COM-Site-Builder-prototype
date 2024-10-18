@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
         }
         else if (username==admin.username && password==admin.password){
             token = jwt.sign({id: admin.id , username: admin.username}, process.env.JWT_SECRET)
-            res.cookie('access_token', token, {httpOnly: true, sameSite: 'Strict', expires: new Date(Date.now() + 60*60*1000)})
+            res.cookie('access_token', token, {httpOnly: true, sameSite: 'Strict', expires: new Date(Date.now() + 24*60*60*1000)})
                .status(200)
                .json({message: 'Login successful'})
         }

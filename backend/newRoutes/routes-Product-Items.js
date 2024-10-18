@@ -84,10 +84,10 @@ router.get('/nxt-pk/:productID', verifyToken, async(req, res) => { //gets Primar
     if (isNaN(parsedID)) return res.sendStatus(400);
 
     try{
-        let final = 1;
+        let final = 0;
         const results = await prod_Obj.find({ProductID : parsedID});
 
-        if(results.length==0) final = 1; //No items yet added under {parsedID} category
+        if(results.length==0) final = 0; //No items yet added under {parsedID} category
         else {
             const len = results.length
             final = results[len-1]["PK_n"]  //last item's pk
