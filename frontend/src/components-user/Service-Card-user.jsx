@@ -11,11 +11,6 @@ const ServiceCard_user = ({tileprops, serviceData, features, index}) => {
     setModalOpen(false);
   };
 
-  const handleSubmit = (visitorInfo, service) => { // In event of 'Book Service' form submission
-    // Handle form submission (e.g., send to backend or log it)
-    console.log('Visitor Info:', visitorInfo);
-    console.log('Requested Service:', service);
-  };
 
   const img_paths = serviceData["images"] //array of image paths
 
@@ -98,7 +93,7 @@ const ServiceCard_user = ({tileprops, serviceData, features, index}) => {
 
         {/* Book Service Button without a Price specified*/}
         {isBook === 1 && (
-          <div className='w-[400px] h-[auto] flex items-center justify-center pt-[10px] pb-[10px] px-[15px] my-2'>
+          <div className='w-[400px] h-[auto] flex items-center justify-center pt-[5px] pb-[15px] px-[10px] my-2'>
               <button onClick={handleOpenModal} className="bg-green-400 text-black font-semibold px-6 py-2 text-sm rounded-lg border border-green-400 hover:bg-green-50 transition-all">
                   Book Now
               </button>
@@ -110,11 +105,8 @@ const ServiceCard_user = ({tileprops, serviceData, features, index}) => {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           serviceData={serviceData}
-          onSubmit={handleSubmit}
         />
-
-
-
+        
     </div>
   )
 }

@@ -6,7 +6,7 @@ import { PropContext } from '../context/PropContext';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-const BookService = ({ isOpen, onClose, serviceData, onSubmit }) => {
+const BookService = ({ isOpen, onClose, serviceData }) => {
 
   const {allProps, pIDList} = useContext(PropContext)
   const title_field = allProps[0] // Title field of the service category
@@ -56,7 +56,7 @@ const BookService = ({ isOpen, onClose, serviceData, onSubmit }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto pt-20 pb-5">
       <div className="bg-white w-full max-w-md p-8 rounded-lg shadow-lg">
         <h2 className="text-xl font-bold mb-6">Request Service: {serviceData.props.serviceName}</h2>
         <div className="space-y-4">
