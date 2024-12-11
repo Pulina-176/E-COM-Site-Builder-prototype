@@ -7,7 +7,7 @@ const router = express();
 // POST route to add new order details into database
 router.post("/", async (req, res) => {
     try {
-        const { Email, ContactNo, Order, Ordered_date, Total_payed } = req.body;
+        const { Email, ContactNo, Order, Ordered_date, Total_payed, Address, Zipcode } = req.body;
 
         // Create a new order record with the provided data
         const newOrder = new orders({
@@ -15,7 +15,9 @@ router.post("/", async (req, res) => {
             ContactNo,
             Order,
             Ordered_date,
-            Total_payed
+            Total_payed,
+            Address,
+            Zipcode
         });
 
         await newOrder.save();
@@ -40,18 +42,18 @@ router.get('/', verifyToken, async(req, res)=>{ //get all current booking reques
 
 })
 
-router.delete('/:id/:pk', verifyToken, async(req, res) => { //Delete a booking request
+// router.delete('/:id/:pk', verifyToken, async(req, res) => { //Delete a booking request
 
-    if (req.user.id !== '_jfkeycbx,ootiu') return res.status(401).json({error: 'Unauthorized'})
+//     if (req.user.id !== '_jfkeycbx,ootiu') return res.status(401).json({error: 'Unauthorized'})
 
-    const {id, pk} = req.params
+//     const {id, pk} = req.params
 
-    try {
-        await orders.deleteOne({ ServiceID : id , PK_n : pk });
-        res.send('Request deleted');
-    } catch (error) {
-        res.status(500).send('Error deleting service');
-    }
-})
+//     try {
+//         await orders.deleteOne({ ServiceID : id , PK_n : pk });
+//         res.send('Request deleted');
+//     } catch (error) {
+//         res.status(500).send('Error deleting service');
+//     }
+// })
 
 export default router;

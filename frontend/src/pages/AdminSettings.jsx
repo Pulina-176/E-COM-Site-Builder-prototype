@@ -26,7 +26,8 @@ const AdminSettings = () => {
           <div className='flex flex-col w-[50%]'>
             <div className='w-[90%] h-[auto] bg-[#F0F3FF] ml-[60px] rounded-[10px] flex flex-col justify-center'>
               <p className='font-inter text-xl font-semibold mx-[40px] mt-[20px]'>Sales and Bookings</p>
-              <button className="btn btn-accent mt-[20px] w-[40%] self-center mb-[40px]"><Link to="/admin/requests">Service Requests</Link></button>
+              <button className="btn btn-accent mt-[20px] w-[40%] self-center mb-[20px]"><Link to="/admin/requests">Service Requests</Link></button>
+              <button className="btn btn-accent w-[40%] self-center mb-[40px]"><Link to="/admin/orders">Sales & Orders</Link></button>
             </div>
           </div>
 

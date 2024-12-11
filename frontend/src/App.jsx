@@ -12,6 +12,7 @@ import Products from './pages/Products';
 import Services from './pages/Services';
 import PrivateRoutes from './components/PrivateRoutes';
 import RequestsList from './pages/RequestsList';
+import Orders from './pages/Orders';
 
 
 import Products_user from './pages-user/Products-user';
@@ -35,6 +36,7 @@ const App = () => {
         <Route path='/admin/products' element={<Products/>}/>
         <Route path='/admin/services' element={<Services/>}/>
         <Route path='/admin/requests' element={<RequestsList/>}/>
+        <Route path='/admin/orders' element={<Orders/>}/>
       </Route>  
 
         <Route path='/user/products' element={<Products_user/>} />

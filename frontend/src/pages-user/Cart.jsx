@@ -1,42 +1,8 @@
-// import React from 'react'
-// import { useSelector } from 'react-redux'
-// import CartItem from '../components-user/cartItem'
-// import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-// import PayPalPayment from '../components-user/PayPalPayment';
-
-
-// const Cart = () => {
-    
-//     const initialOptions = {  //Paypal options
-//         "client-id": "AX0iBcGa4O_MPkaLuyL5iuYGtf0WgMW9QIUjdET7LP1j972IkTMMNwF9_Df_I959XqEhLThGS-9tcYiX",
-//         currency: "USD",
-//         intent: "capture",
-//     };
-
-//     const carts = useSelector(store => store.cart.items)
-
-//     return (
-//         <PayPalScriptProvider options={initialOptions}>
-//         <div>
-//             {carts.map((item, index) => (
-//                 <CartItem key={index} data={item} />
-//             ))}
-//         </div>
-//         <PayPalPayment/>
-//         </PayPalScriptProvider>
-//     )    
-
-// }
-
-// export default Cart
-
 import React from 'react';
 import { useSelector } from 'react-redux';
 import CartItem from '../components-user/cartItem';
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa'; 
-import PayPalPayment from '../components-user/PayPalPayment';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { clearCart } from '../stores/cart';
@@ -47,17 +13,11 @@ const Cart = () => {
 
     const dispatch = useDispatch(); // redux hook
 
-    const initialOptions = {  // PayPal options
-        "client-id": "AX0iBcGa4O_MPkaLuyL5iuYGtf0WgMW9QIUjdET7LP1j972IkTMMNwF9_Df_I959XqEhLThGS-9tcYiX",
-        currency: "USD",
-        intent: "capture",
-    };
 
     const carts = useSelector(store => store.cart.items);
 
-    const body = {
-        items: carts
-    }
+    const filteredCarts = carts.map(({ image, ...rest }) => rest);
+    console.log(filteredCarts);
 
     const goToCheckout = () => {
         fetch(`${import.meta.env.VITE_PAYMENT_URL}/stripe-checkout`, {
@@ -66,7 +26,7 @@ const Cart = () => {
                 'Content-Type': 'application/json',
             }),
             body: JSON.stringify({
-                items: carts
+                items: filteredCarts
             })
         })
         .then(res => res.json())

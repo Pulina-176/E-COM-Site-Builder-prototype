@@ -21,6 +21,14 @@ const Orders = mongoose.Schema(
         Total_payed: {
             type: Number,
             required: true
+        },
+        Address: {
+            type: String,
+            required: true
+        },
+        Zipcode: {
+            type: String,
+            required: true
         }
     })
 
