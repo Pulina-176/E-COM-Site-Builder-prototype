@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, useContext } from 'react';
 import Navbar_User from '../components-user/Navbar-user';
 import axios from 'axios';
 import { PropContext } from '../context/PropContext';
+import Footer from '../components-user/Footer';
 import ProductTile_user from '../components-user/Product-Tile-user';               // Product card with purchase button
 import ProductTile_user_no_buy from '../components-user/Product-Tile-user-no-buy'; // Product card with no purchase button
 import Spinner from '../components/Spinner';
@@ -108,7 +109,7 @@ const Products_user = () => {
   }
 
   return (
-    <div className='pb-[50px]' style={{backgroundColor: theme.body,  color: theme.primaryText }}>
+    <div className='pb-[0px]' style={{backgroundColor: theme.body,  color: theme.primaryText }}>
       <Navbar_User pages={list} />
       <h1 className='font-inter font-extrabold text-4xl ml-[60px] my-[30px]'
           style={{ color: theme.mainHead }}
@@ -119,20 +120,31 @@ const Products_user = () => {
         <div key={index}>
           <h1 className='font-inter font-extrabold text-3xl ml-[60px] my-[30px]'>{item}</h1>
           <PropContext.Provider value={{ allProps, pIDList }}> {/* useContext usage for prop drilling */}
-          <div className='flex flex-row'>
-            <div className='ml-[60px] flex flex-row'>
+            <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 mx-[10px] sm:mx-[20px] md:mx-[40px] lg:mx-[60px]'>
               {productData[pIDList[index]]?.map((value, i) => (
-                <div key={i} className='mx-[20px] mb-[30px]'>
+                <div key={i} className='mx-[20px] mb-[40px]'>
                   {features[index][1]==0? //check for buy option in feature string
                   <ProductTile_user_no_buy tileprops={tileProps[index]} features={features[index]} productData={value} index={index} />: 
                   <ProductTile_user tileprops={tileProps[index]} features={features[index]} productData={value} index={index} PID={pIDList[index]}/>}
                 </div>
               ))}
             </div>
-          </div>
           </PropContext.Provider>
         </div>
       ))}
+
+    {/* Footer Section */}
+    <Footer 
+    socialLinks={{
+      facebook: 'https://facebook.com/yourpage',
+      instagram: 'https://instagram.com/yourpage',
+      twitter: 'https://twitter.com/yourpage',
+    }}
+    contactDetails={{
+      email: 'info@yourcompany.com',
+      phone: '+123 456 7890',
+    }}
+    />
 
     </div>
   );

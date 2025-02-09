@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, useContext } from 'react'
 import Navbar_User from '../components-user/Navbar-user';
 import axios from 'axios';
 import Spinner from '../components/Spinner';
+import Footer from '../components-user/Footer';
 import { PropContext } from '../context/PropContext.jsx';
 import { ThemeContext } from '../context/ThemeContext';
 
@@ -104,36 +105,43 @@ const Services_user = () => { //Services page in user's POV
   }
     
   return (
-    <div className='pb-[50px]' style={{backgroundColor: theme.body,  color: theme.primaryText}}>
-      <Navbar_User pages={list} />
-      <h1 className='font-inter font-extrabold text-4xl ml-[60px] my-[30px]'
+    <div className='pb-[0px]' style={{backgroundColor: theme.body,  color: theme.primaryText}}>
+    <Navbar_User pages={list} />
+    <h1 className='font-inter font-extrabold text-4xl ml-[60px] my-[30px]'
         style={{ color: theme.mainHead }}
-      >
+    >
         Our Services</h1>
-      
-      {serviceList.map((item, index) => (
+    
+    {serviceList.map((item, index) => (
         <div key={index}>
             <h1 className='font-inter font-extrabold text-3xl ml-[60px] my-[30px]'>{item}</h1>
             <PropContext.Provider value={{ allProps, sIDList }}> {/* useContext usage for prop drilling */}
-            <div className='flex flex-row'>
-                <div className='ml-[60px] flex flex-row'>
-                {serviceData[sIDList[index]]?.map((value, i) => (
-                    <div key={i} className='mx-[20px]'>
-                      {features[index][1]==0? //check for buy option in feature string
-                      <ServiceCard_user_no_buy tileprops={tileProps[index]} features={features[index]} serviceData={value} index={index}/>: 
-                      <ServiceCard_user tileprops={tileProps[index]} features={features[index]} serviceData={value} index={index}/>}  
-                    </div>
-                ))}
+                <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mx-[10px] sm:mx-[20px] md:mx-[40px] lg:mx-[60px]'>
+                    {serviceData[sIDList[index]]?.map((value, i) => (
+                        <div key={i} className='mx-[20px] my-[20px]'>
+                            {features[index][1] === 0 ? //check for buy option in feature string
+                            <ServiceCard_user_no_buy tileprops={tileProps[index]} features={features[index]} serviceData={value} index={index}/> : 
+                            <ServiceCard_user tileprops={tileProps[index]} features={features[index]} serviceData={value} index={index}/>}  
+                        </div>
+                    ))}
                 </div>
-            </div>
             </PropContext.Provider>
-
-
         </div>
-      ))}
-      
-      
-    </div>
+    ))}
+
+    {/* Footer Section */}
+    <Footer 
+    socialLinks={{
+      facebook: 'https://facebook.com/yourpage',
+      instagram: 'https://instagram.com/yourpage',
+      twitter: 'https://twitter.com/yourpage',
+    }}
+    contactDetails={{
+      email: 'info@yourcompany.com',
+      phone: '+123 456 7890',
+    }}
+    />
+</div>
   )
 }
 

@@ -75,7 +75,8 @@ const PopupBox_Navbar_color_image = () => { //boolean prop to check if landing o
         }
       
         try {
-          const response = await axios.patch(`${backendUrl}/display/`, formData);
+          const response = await axios.patch(`${backendUrl}/display/`, formData)
+                                       .then(alert("Settings saved successfully"));;
           console.log('Font settings saved:', response.data);
         } catch (error) {
           console.error('Error saving font settings:', error);

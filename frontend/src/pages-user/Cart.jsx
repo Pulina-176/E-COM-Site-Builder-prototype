@@ -1,57 +1,41 @@
-// import React from 'react'
-// import { useSelector } from 'react-redux'
-// import CartItem from '../components-user/cartItem'
-// import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-// import PayPalPayment from '../components-user/PayPalPayment';
-
-
-// const Cart = () => {
-    
-//     const initialOptions = {  //Paypal options
-//         "client-id": "AX0iBcGa4O_MPkaLuyL5iuYGtf0WgMW9QIUjdET7LP1j972IkTMMNwF9_Df_I959XqEhLThGS-9tcYiX",
-//         currency: "USD",
-//         intent: "capture",
-//     };
-
-//     const carts = useSelector(store => store.cart.items)
-
-//     return (
-//         <PayPalScriptProvider options={initialOptions}>
-//         <div>
-//             {carts.map((item, index) => (
-//                 <CartItem key={index} data={item} />
-//             ))}
-//         </div>
-//         <PayPalPayment/>
-//         </PayPalScriptProvider>
-//     )    
-
-// }
-
-// export default Cart
-
 import React from 'react';
 import { useSelector } from 'react-redux';
 import CartItem from '../components-user/cartItem';
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa'; 
-import PayPalPayment from '../components-user/PayPalPayment';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { clearCart } from '../stores/cart';
 
 const Cart = () => {
 
     const navigate = useNavigate();  // Initialize navigate hook
 
-    const initialOptions = {  // PayPal options
-        "client-id": "AX0iBcGa4O_MPkaLuyL5iuYGtf0WgMW9QIUjdET7LP1j972IkTMMNwF9_Df_I959XqEhLThGS-9tcYiX",
-        currency: "USD",
-        intent: "capture",
-    };
+    const dispatch = useDispatch(); // redux hook
+
 
     const carts = useSelector(store => store.cart.items);
 
+    const filteredCarts = carts.map(({ image, ...rest }) => rest);
+    console.log(filteredCarts);
+
+    const goToCheckout = () => {
+        fetch(`${import.meta.env.VITE_PAYMENT_URL}/stripe-checkout`, {
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+            }),
+            body: JSON.stringify({
+                items: filteredCarts
+            })
+        })
+        .then(res => res.json())
+        .then(url => {
+            location.href = url
+        })
+    }
+
     return (
-        <PayPalScriptProvider options={initialOptions}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 {/* Back to Home button with icon */}
                 <button
@@ -73,11 +57,21 @@ const Cart = () => {
                 </div>
                 <div className="mt-8 flex justify-center">
                     <div className="w-full md:w-1/2 lg:w-1/3">
-                        <PayPalPayment />
+                        <button
+                            onClick={goToCheckout}
+                            className="w-[45%] text-lg mx-[10px] text-white bg-black hover:bg-gray-400 px-6 py-3 rounded-md transition duration-300"
+                        >
+                            Proceed to Checkout
+                        </button>
+                        <button
+                            onClick={() => dispatch(clearCart())}
+                            className="w-[45%] text-lg mx-[10px] text-white bg-orange-400 hover:bg-gray-400 px-6 py-3 rounded-md transition duration-300"
+                        >
+                            Empty Cart
+                        </button>
                     </div>
                 </div>
             </div>
-        </PayPalScriptProvider>
     );
 }
 
