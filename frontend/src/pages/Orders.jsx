@@ -60,27 +60,52 @@ const Orders = () => {
                                     Info
                                 </button>
 
-                                                  {/* Modal for delete confirmation */}
-                                <dialog id={`info_modal_${index}`} className="modal">
-                                    <div className="modal-box">
-                                        <h3 className="font-bold text-lg">Order Details</h3>
-                                        {order.Order.map((item, index) => (
-                                            <div className='pt-4'>
-                                                <p>{JSON.parse(item).Product}</p>
-                                                <p>{JSON.parse(item).Quantity}</p>
-                                                <p>{JSON.parse(item).Price}</p>
-                                                <p>{JSON.parse(item).Total}</p>
-                                            </div>
-                                        ))}
-                                        <p className='font-bold text-md pt-10'>{order.Total_payed}</p>
-                                        <div className="modal-action">
-                                            <form method="dialog">
-                                                {/* If there is a button in form, it will close the modal */}
-                                                <button className="btn bg-green-100">OK</button>
-                                            </form>
-                                        </div>                                        
+                                {/* Modal for show order information */}
+                            <dialog id={`info_modal_${index}`} className="modal">
+                                <div className="modal-box p-6">
+                                    <h3 className="font-bold text-xl text-center">Order Details</h3>
+
+                                    <div className="mt-4">
+                                        <table className="w-full border-collapse">
+                                            <thead>
+                                                <tr className="bg-gray-100">
+                                                    <th className="text-left p-2">Product</th>
+                                                    <th className="text-center p-2">Qty</th>
+                                                    <th className="text-center p-2">Price</th>
+                                                    <th className="text-center p-2">Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {order.Order.map((item, i) => {
+                                                    const parsedItem = JSON.parse(item);
+                                                    return (
+                                                        <tr key={i} className="border-t">
+                                                            <td className="p-2">{parsedItem.Product}</td>
+                                                            <td className="p-2 text-center">{parsedItem.Quantity}</td>
+                                                            <td className="p-2 text-center">LKR {parsedItem.Price}</td>
+                                                            <td className="p-2 text-center font-bold">LKR {parsedItem.Total}</td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </dialog>
+
+                                    {/* Total Amount */}
+                                    <div className="mt-6 text-right">
+                                        <p className="text-lg font-semibold">Total Paid: <span className="text-green-600">LKR {order.Total_payed}</span></p>
+                                    </div>
+
+                                    {/* Modal Actions */}
+                                    <div className="modal-action">
+                                        <form method="dialog">
+                                            <button className="btn bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition-all">
+                                                OK
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </dialog>
                             </td>
                         </tr>
                     ))}

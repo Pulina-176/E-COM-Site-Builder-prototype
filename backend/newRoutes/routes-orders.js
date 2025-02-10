@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
         await newOrder.save();
 
         // Respond with success message
-        res.status(201).json({ message: "Service booked successfully", order: newOrder });
+        res.status(201).json({ message: "Order Placed successfully", order: newOrder });
     } catch (error) {
         res.status(500).json({ message: "Error updating order in database", error });
     }
